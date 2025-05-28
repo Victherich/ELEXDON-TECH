@@ -1,24 +1,57 @@
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import LandingPage from './components/LandingPage';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Hero2 from './components/Hero2';
+import DomainsPage from './components/DomainsPage';
+import Sharedhostingpage from './components/Sharedhostingpage';
+import DedicatedHostingPage from './components/DedicatedHostingPage';
+import AboutPage from './components/AboutUs';
+import ContactUs from './components/ContactUs';
+import BlogPage from './components/BlogPage';
+import TermsPage from './components/TermsAndConditions';
+import PrivacyPolicyPage from './components/PrivacyPolicy';
+import RefundPolicyPage from './components/RefundPolicy';
+import logo2 from './Images/logo2.jpeg';
+import ScrollToTop from './components/ScrollToTop';
+import WordPressHosting from './components/WordPressHosting';
+import DomainTransferPage from './components/DomainTransferPage';
+import ResellerHostingPage from './components/ResellerHostingPage';
+import VPSPage from './components/VPSPage';
+import SSLPage from './components/SSLPage';
+import FreeSSL from './components/FreeSSL';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <ScrollToTop/>
+      <Header/>
+        <Routes>
+          <Route path='/' element={<LandingPage/>}/>
+          <Route path ='/domainspage' element={<DomainsPage/>}/>
+          <Route path='/sharedhosting' element={<Sharedhostingpage/>}/>
+          <Route path='/dedicatedhosting' element={<DedicatedHostingPage/>}/>
+          <Route path='/aboutus' element={<AboutPage/>}/>
+          <Route path='/contactus' element={<ContactUs/>}/>
+          <Route path ='/blogs' element={<BlogPage/>}/>
+          <Route path='/termsandconditions' element={<TermsPage/>}/>
+          <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
+          <Route path='/refundpolicy' element={<RefundPolicyPage/>}/>
+          <Route path = '/wordpresshosting' element={<WordPressHosting/>}/>
+          <Route path='/domaintransfer' element={<DomainTransferPage/>}/>
+          <Route path='/resellerhosting' element={<ResellerHostingPage/>}/>
+          <Route path='/vps' element={<VPSPage/>}/>
+          <Route path='/sslpage' element={<SSLPage/>}/>
+          <Route path='/freessl' element ={<FreeSSL/>}/>
+        </Routes>
+        <Hero2/>
+        <Footer/>
+       
+        
+    </BrowserRouter>
+    
   );
 }
 
