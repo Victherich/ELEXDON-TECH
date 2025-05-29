@@ -250,7 +250,7 @@ const fadeInUp = keyframes`
 
 // Styled Components
 const Section = styled.section`
-  padding: 100px 20px;
+  padding: 30px 20px;
   background-image: url(${featurebg});
   background-size: cover;
   background-position: center;

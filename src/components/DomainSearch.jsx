@@ -176,6 +176,36 @@ import domainsearchimg from '../Images/domainsearchimg.jpeg';
 const availableDomains = ['elexdon.com', 'elexdon.net', 'elexdon.io'];
 
 // Scroll animation hook - triggers animation every time element scrolls in/out of view
+// const useAnimateOnScroll = (animationClass) => {
+//   const ref = useRef(null);
+//   const [isVisible, setVisible] = useState(false);
+
+//   useEffect(() => {
+//     const el = ref.current;
+//     if (!el) return;
+
+//     const observer = new IntersectionObserver(
+//       ([entry]) => {
+//         if (entry.isIntersecting) {
+//           setVisible(true);
+//         } else {
+//           setVisible(false);
+//         }
+//       },
+//       { threshold: 0.2 }
+//     );
+
+//     observer.observe(el);
+//     return () => observer.disconnect();
+//   }, []);
+
+//   return {
+//     ref,
+//     className: isVisible ? `animate__animated ${animationClass}` : 'opacity-0',
+//   };
+// };
+
+
 const useAnimateOnScroll = (animationClass) => {
   const ref = useRef(null);
   const [isVisible, setVisible] = useState(false);
@@ -186,13 +216,17 @@ const useAnimateOnScroll = (animationClass) => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Optional: only trigger once, or allow retrigger
         if (entry.isIntersecting) {
           setVisible(true);
-        } else {
-          setVisible(false);
         }
       },
-      { threshold: 0.2 }
+      {
+        // Wait until at least 50% of the element is visible
+        threshold: 0.5,
+        // Pushes the "activation zone" up, so animation doesn't trigger too early at bottom of screen
+        rootMargin: '0px 0px -50px 0px',
+      }
     );
 
     observer.observe(el);
@@ -201,13 +235,14 @@ const useAnimateOnScroll = (animationClass) => {
 
   return {
     ref,
-    className: isVisible ? `animate__animated ${animationClass}` : 'opacity-0',
+    className: isVisible ? `animate__animated ${animationClass}` : '',
   };
 };
 
+
 const DomainWrap = styled.div`
   width: 100%;
-  padding: 100px 0px;
+  padding:20px 0px;
   background-image: url(${domainsearchimg});
   background-size: cover;
   background-position: bottom;
@@ -261,12 +296,16 @@ const Input = styled.input`
   padding: 12px 20px;
   border-radius: 30px;
   border: none;
-  width: 300px;
+  width: 600px;
   font-size: 16px;
   outline: #2B32B2;
-  border: 4px solid rgba(0,0,255,0.2);
+  border: 4px solid rgba(0,0,255,0.4);
   background: #eee;
   color: #333;
+
+  @media(max-width:768px){
+    width:300px;
+  }
 `;
 
 const Button = styled.button`
@@ -334,6 +373,10 @@ const DomainSearch = () => {
           />
           <Button type="submit">Search</Button>
         </Form>
+
+        <Title style={{fontSize:"1rem"}}>
+          .com ₦27,500│.com.ng ₦9,000│.ng ₦17,500│.org ₦30,000│
+        </Title>
         {result && (
           <Result
             ref={resultAnim.ref}

@@ -257,6 +257,7 @@ import innocentImg from '../Images/team4.jpg';
 import { useRef, useState, useEffect } from 'react';
 import Partners from './Partners';
 import TemplateShowcase from './TemplateShowcase';
+import Partners2 from './Partners2';
 
 // Hook
 const useAnimateOnScroll = (animationClass) => {
@@ -289,6 +290,7 @@ const AboutSection = styled.section`
   background-image: url(${heroBg});
   background-size: cover;
   background-position: center;
+
   color: white;
   padding: 100px 20px;
   text-align: center;
@@ -520,7 +522,8 @@ const AboutPage = () => {
       </Highlights>
       <TemplateShowcase/>
  <Partners/>
-      <TeamSection>
+ <Partners2/>
+      {/* <TeamSection>
         <TeamTitle>Our Team Members</TeamTitle>
         <TeamGrid>
           {[michaelImg, amakaImg, ayodeleImg, innocentImg].map((img, i) => (
@@ -540,7 +543,7 @@ const AboutPage = () => {
             </TeamCard>
           ))}
         </TeamGrid>
-      </TeamSection>
+      </TeamSection> */}
      
     </div>
   );

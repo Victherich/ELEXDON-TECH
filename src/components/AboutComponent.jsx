@@ -533,9 +533,11 @@ const Container = styled.div`
   align-items: center;
   background: ${({ theme }) =>
     theme === 'dark' ? 'linear-gradient(90deg, #0f172a, #1e293b)' : 'linear-gradient(90deg, #f8fafc, #e2e8f0)'};
-  padding: 80px 10px;
+  // padding: 80px 10px;
   color: ${({ theme }) => (theme === 'dark' ? '#ffffff' : '#1e293b')};
   border-radius: 500px 0px 0px 0px;
+  padding-top:80px;
+  padding-bottom:30px;
 `;
 
 const CubeContainer = styled.div`
@@ -631,6 +633,32 @@ const Div = styled.div`
 `;
 
 // Hook to trigger animate.css classes on scroll in/out
+// const useAnimateOnScroll = (animationClass) => {
+//   const ref = useRef(null);
+//   const [isVisible, setVisible] = useState(false);
+
+//   useEffect(() => {
+//     const el = ref.current;
+//     if (!el) return;
+
+//     const observer = new IntersectionObserver(
+//       ([entry]) => {
+//         setVisible(entry.isIntersecting);
+//       },
+//       { threshold: 0.3 }
+//     );
+
+//     observer.observe(el);
+//     return () => observer.disconnect();
+//   }, []);
+
+//   return {
+//     ref,
+//     className: isVisible ? `animate__animated ${animationClass}` : '',
+//   };
+// };
+
+
 const useAnimateOnScroll = (animationClass) => {
   const ref = useRef(null);
   const [isVisible, setVisible] = useState(false);
@@ -641,9 +669,17 @@ const useAnimateOnScroll = (animationClass) => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setVisible(entry.isIntersecting);
+        // Optional: only trigger once, or allow retrigger
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
       },
-      { threshold: 0.3 }
+      {
+        // Wait until at least 50% of the element is visible
+        threshold: 0.5,
+        // Pushes the "activation zone" up, so animation doesn't trigger too early at bottom of screen
+        rootMargin: '0px 0px -50px 0px',
+      }
     );
 
     observer.observe(el);
@@ -655,6 +691,7 @@ const useAnimateOnScroll = (animationClass) => {
     className: isVisible ? `animate__animated ${animationClass}` : '',
   };
 };
+
 
 // Cube face config
 const faces = [

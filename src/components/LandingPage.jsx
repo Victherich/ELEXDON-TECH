@@ -10,6 +10,7 @@ import TemplateShowcase from './TemplateShowcase'
 import Border from './Border'
 import Hero2 from './Hero2'
 import Partners from './Partners'
+import Partners2 from './Partners2'
 
 
 const LandingPage = () => {
@@ -25,14 +26,16 @@ background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, F
   return (
     <Div>
       <Hero/>
+      <DomainSearch/>
       <AboutComponent/>
       <Border/>
      
-      <DomainSearch/>
+      
       <ServicesShowcase/>
       <Features/>
  <Partners/>
         <TemplateShowcase/>
+        <Partners2/>
         
     </Div>
   )

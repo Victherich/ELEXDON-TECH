@@ -22,6 +22,14 @@ import ResellerHostingPage from './components/ResellerHostingPage';
 import VPSPage from './components/VPSPage';
 import SSLPage from './components/SSLPage';
 import FreeSSL from './components/FreeSSL';
+// import ContactUs from './components/ContactUs';
+import SupportPage from './components/SupportPage';
+import SignupPage from './components/SignUp';
+import LoginPage from './components/Login';
+import ForgotPasswordPage from './components/ForgotPassword';
+import AffiliatePage from './components/AffiliatePage';
+import Announcement from './components/Announcement';
+import KnowledgeBasePage from './components/KnowledgeBasePage';
 
 function App() {
   return (
@@ -45,6 +53,14 @@ function App() {
           <Route path='/vps' element={<VPSPage/>}/>
           <Route path='/sslpage' element={<SSLPage/>}/>
           <Route path='/freessl' element ={<FreeSSL/>}/>
+          <Route path='/support' element={<SupportPage/>}/>
+          <Route path='/signup' element={<SignupPage/>}/>
+          <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/forgot-password' element={<ForgotPasswordPage/>}/>
+          <Route path='/affiliate' element={<AffiliatePage/>}/>
+          <Route path='/announcement' element={<Announcement/>}/>
+          <Route path='knowledgebase' element={<KnowledgeBasePage/>}/>
+        
         </Routes>
         <Hero2/>
         <Footer/>

@@ -53,9 +53,11 @@ const Logo = styled.a`
 
 const Nav = styled.nav`
   backdrop-filter: blur(15px);
-  background-color: rgba(0, 0, 80, 0.5);
+  // background-color: rgba(0, 0, 80, 0.5);
+   background-color: rgba(79, 0, 110, 0.5);
   padding-right: 20px;
   border-radius: 10px;
+  border:1px solid lightgray;
 
   @media (max-width: 884px) {
     display: none;
@@ -124,7 +126,9 @@ const Dropdown = styled.ul`
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: rgba(0, 0, 50, 0.9);
+  // background-color: rgba(0, 0, 50, 0.9);
+  background-color: rgba(101, 1, 141, 0.8);
+  border:1px solid lightgray;
   border-radius: 8px;
   padding: 10px 0;
   min-width: 200px;
@@ -173,9 +177,12 @@ const Header = () => {
   const menuRef = useRef();
   const menuRef2 = useRef();
    const menuRef3 = useRef();
+ const menuRef4 = useRef();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
  const [dropdownOpen2, setDropdownOpen2] = useState(false);
  const [dropdownOpen3, setDropdownOpen3] = useState(false);
+ const [dropdownOpen4, setDropdownOpen4] = useState(false);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -189,6 +196,11 @@ const Header = () => {
 
    const handleDropdownToggle3 = () => {
     setDropdownOpen3(!dropdownOpen3);
+    
+  };
+
+  const handleDropdownToggle4 = () => {
+    setDropdownOpen4(!dropdownOpen4);
     
   };
 
@@ -243,6 +255,21 @@ useEffect(()=>{
 
 
 
+   // handling click away
+useEffect(()=>{
+   const handleClickOutside = (event)=>{
+      if(menuRef4.current&&!menuRef4.current.contains(event.target)){
+         setDropdownOpen4(false)
+      }
+   }
+   document.addEventListener('mousedown',handleClickOutside)
+      return ()=>{
+         document.removeEventListener('mousedown',handleClickOutside)
+      }
+},[])
+
+
+
 
   return (
     <HeaderWrapper>
@@ -251,15 +278,15 @@ useEffect(()=>{
           <img src={logo} alt="Elexdon Logo" />
         </Logo>
         <Toggle onClick={() => setNavOpen(!navOpen)}>
-          {navOpen ? <FaTimes /> : <FaBars />}
+          {navOpen ? <FaTimes style={{padding:"5px", background:"#000050", borderRadius:"10px"}}/> : <FaBars style={{padding:"5px", background:"#000050", borderRadius:"10px"}}/>}
         </Toggle>
         <Nav isOpen={navOpen}>
           <ul>
             <li onClick={()=>setNavOpen(false)}><NavLink to="/" end>Home</NavLink></li>
-            <li onClick={()=>setNavOpen(false)}><NavLink to="/aboutus">About Us</NavLink></li>
+            {/* <li onClick={()=>setNavOpen(false)}><NavLink to="/aboutus">About Us</NavLink></li> */}
             
             <li onClick={handleDropdownToggle2}>
-                   <li  style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}} onMouseEnter={()=>{setDropdownOpen2(true); setDropdownOpen(false); setDropdownOpen3(false)}}>DOMAINS ▾</li>
+                   <li  style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}} onMouseEnter={()=>{setDropdownOpen2(true); setDropdownOpen(false); setDropdownOpen3(false); setDropdownOpen4(false)}}>DOMAINS ▾</li>
              {dropdownOpen2&& <Dropdown open={dropdownOpen2} ref={menuRef2}>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/domainspage">Domain Registration</NavLink></li>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/domaintransfer">Domain Transfer</NavLink></li>
@@ -269,7 +296,7 @@ useEffect(()=>{
           
 
             <li onClick={handleDropdownToggle}>
-            <li style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}} onMouseEnter={()=>{setDropdownOpen(true); setDropdownOpen2(false);setDropdownOpen3(false); }}>HOSTING ▾</li>
+            <li style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}} onMouseEnter={()=>{setDropdownOpen(true); setDropdownOpen2(false);setDropdownOpen3(false);setDropdownOpen4(false) }}>HOSTING ▾</li>
               {dropdownOpen&& <Dropdown open={dropdownOpen} ref={menuRef}>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/sharedhosting">Shared Hosting</NavLink></li>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/dedicatedhosting">Dedicated Hosting</NavLink></li>
@@ -280,16 +307,25 @@ useEffect(()=>{
              </li>
             
           
-             <li onClick={handleDropdownToggle3} onMouseEnter={()=>{setDropdownOpen3(true);setDropdownOpen(false); setDropdownOpen2(false) }}>
+             <li onClick={handleDropdownToggle3} onMouseEnter={()=>{setDropdownOpen3(true);setDropdownOpen(false); setDropdownOpen2(false);setDropdownOpen4(false) }}>
             <li style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}}>SECURITY ▾</li>
               {dropdownOpen3&& <Dropdown open={dropdownOpen3} ref={menuRef3} style={{left:"50%"}}>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/freessl">Free SSL</NavLink></li>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/sslpage">Site Security Lock</NavLink></li>
                </Dropdown>}
              </li>
+            <li onClick={()=>setNavOpen(false)}><NavLink to="/support">Support</NavLink></li>
 
-            <li onClick={()=>setNavOpen(false)}><NavLink to="/blogs">Blogs</NavLink></li>
-            <li onClick={()=>setNavOpen(false)}><NavLink to="/contactus">Contact</NavLink></li>
+ <li onClick={handleDropdownToggle4} onMouseEnter={()=>{setDropdownOpen4(true);setDropdownOpen(false); setDropdownOpen2(false); setDropdownOpen3(false);}}>
+              <li style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}}>ACCOUNT ▾</li>
+              {dropdownOpen4&& <Dropdown open={dropdownOpen4} ref={menuRef4} style={{left:"70%"}}>
+                 <li onClick={()=>setNavOpen(false)}><NavLink to="/signup">Sign Up</NavLink></li>
+                 <li onClick={()=>setNavOpen(false)}><NavLink to="/login">Login</NavLink></li>
+               </Dropdown>}
+      </li>
+
+            {/* <li onClick={()=>setNavOpen(false)}><NavLink to="/blogs">Blogs</NavLink></li> */}
+            {/* <li onClick={()=>setNavOpen(false)}><NavLink to="/contactus">Contact</NavLink></li> */}
             {/* <li><NavLink to="/login">Login</NavLink></li> */}
           </ul>
         </Nav>

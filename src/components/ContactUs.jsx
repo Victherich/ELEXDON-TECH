@@ -151,7 +151,7 @@ background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, F
   }
 `;
 
-const SupportPage = () => {
+const ContactUs = () => {
 
 
   const heroTitleAnim = useAnimateOnScroll('animate__fadeInDown animate__slower');
@@ -244,4 +244,4 @@ const e = useAnimateOnScroll('animate__fadeInDown animate__slower');
   );
 };
 
-export default SupportPage;
+export default ContactUs;

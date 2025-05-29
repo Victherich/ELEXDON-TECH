@@ -1,13 +1,25 @@
 /* General Styling */
 .partners-section {
     background: #f9f9f9;
-    padding: 60px 20px;
+    padding: 30px 20px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
     background-image: url('../Images/herobg1.jpg');
     background-position: bottom;
     background-size: cover;
+  }
+
+
+.partners-section2 {
+    /* background: #f9f9f9; */
+    /* background: rgba(255,255,255,0.7); */
+    background: #BAD7EE ;
+    padding: 30px 20px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+
   }
   
   .partners-title {
@@ -34,6 +46,13 @@
     align-items: center;
   }
   
+ .partners-track2 {
+    display: flex;
+    animation: scroll2 15s linear infinite;
+    align-items: center;
+    justify-content: center;
+  }
+
   .partner-card {
     display: flex;
     flex-direction: column;
@@ -60,7 +79,7 @@
   
   .partner-name {
     font-size: 0.8rem;
-    color: #ff6600;
+    color: #000050;
     font-weight: 500;
   }
 
@@ -103,6 +122,11 @@
   @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
+  }
+
+   @keyframes scroll2 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
   }
   
   /* Responsive Design */

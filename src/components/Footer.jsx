@@ -377,6 +377,7 @@ import logo2 from '../Images/logo4.jpeg';
 
 
 const FooterWrapper = styled.footer`
+position:relative;
 //   background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
 //   color: #f5f5f5;
 //   padding-top: 80px;
@@ -420,7 +421,7 @@ background: linear-gradient(to left, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/
 const FooterContent = styled.div`
   width:100%;
 //   margin: auto;
-  padding: 100px 0px;
+  padding: 20px 0px;
  
   display: flex;
   flex-wrap:wrap;
@@ -435,6 +436,11 @@ const FooterContent = styled.div`
 // background:rgba(255,255,255,1);
 background:#E4E9F1;
 
+
+@media (max-width: 1279px) {
+    border-radius:0px 0px 0px 0px;
+  }
+
   @media (max-width: 768px) {
     text-align: center;
     grid-template-columns: 1fr;
@@ -445,6 +451,17 @@ const Section = styled.div`
 img{
 width:100px;
 }
+`;
+
+const SectionN = styled.div`
+position:absolute;
+ left:75%;
+  top:70%;
+   z-index:2;
+
+   @media(max-width:1279px){
+    display:none;
+   }
 `;
 
 
@@ -463,6 +480,12 @@ const Title1 = styled.h4`
 
 const Title = styled.h4`
   margin-bottom: 16px;
+  font-size: 18px;
+  color: #000080; /* saffron gold */
+`;
+
+const Title3 = styled.h4`
+margin-bottom:2px;
   font-size: 18px;
   color: #000080; /* saffron gold */
 `;
@@ -503,7 +526,7 @@ const Newsletter = styled.div`
     width: 100%;
     padding: 10px;
     border: 1px solid #2B32B2;
-    margin-top: 10px;
+    // margin-top: 10px;
     border-radius: 5px;
     outline: none;
     background: white;
@@ -552,7 +575,8 @@ const Copyright = styled.div`
 //   background: #1e1e2f;
 // background: linear-gradient(135deg, #3F689D,  #303D72);
   text-align: center;
-  padding: 30px 0px;
+  padding: 10px 0px;
+  padding-top:20px;
   font-size: 14px;
   color: white;
   height:100px;
@@ -571,7 +595,8 @@ const Copyright2 = styled.div`
 //   background: #1e1e2f;
 // background: linear-gradient(135deg, #3F689D,  #303D72);
   text-align: center;
-  padding: 30px 0px;
+  padding: 10px 0px;
+  padding-top:20px;
   font-size: 14px;
   color: white;
   height:100px;
@@ -592,11 +617,14 @@ const Footer = () => {
       <TopBorder></TopBorder>
       <FooterContent>
         <Section>
-            <img src={logo}/>
+            {/* <img src={logo}/> */}
           {/* <Title1>ELEXDON HOST</Title1> */}<br/>
           <img src={logo2} alt='logo' style={{width:"200px", borderRadius:"5px", marginTop:"10px"}}/>
-          <p>Secure. Scalable. Simple Hosting for Everyone.</p>
-          <p><strong style={{color:" #2B32B2"}}>Email:</strong> support@elexdonhost.com.ng</p>
+          {/* <p>Secure. Scalable. Simple Hosting for Everyone.</p> */}
+          <p><strong style={{
+  color: "#2B32B2",
+  textShadow: "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff"
+}}>Email:</strong> support@elexdonhost.com.ng</p>
         <p>
           <strong style={{color:" #2B32B2"}}>Phone:</strong> +234 818 560 9702
         </p>
@@ -616,7 +644,8 @@ const Footer = () => {
           <Title>Company</Title>
           <Link href="/aboutus">About Us</Link>
           <Link href="/blogs">Blogs</Link>
-          {/* <Link href="#">Careers</Link> */}
+          <Link href="/affiliate">Affiliate</Link>
+          <Link href="/announcement">Announcement</Link>
           {/* <Link href="#">Partners</Link> */}
         </Section>
 
@@ -639,19 +668,22 @@ const Footer = () => {
         <Section>
           <Title>Support</Title>
           <Link href="/contactus">Contact Us</Link>
-          {/* <Link href="#">Knowledgebase</Link> */}
+          <Link href="/support">Tickets</Link>
+          <Link href="/knowledgebase">Knowledgebase</Link>
+          
           <Link href="/privacypolicy">Privacy Policy</Link>
           <Link href="/refundpolicy">Refund Policy</Link>
           <Link href="/termsandconditions">Terms of Service</Link>
         </Section>
 
-        <Section>
-          <Title>Newsletter</Title>
+        <SectionN >
+          <Title3>Newsletter</Title3>
           <Newsletter>
+       
             <input type="email" placeholder="Enter your email" />
             <button>Subscribe</button>
           </Newsletter>
-        </Section>
+        </SectionN>
       </FooterContent>
 
       {/* <WaveTop>

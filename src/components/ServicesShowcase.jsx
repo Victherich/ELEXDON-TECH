@@ -133,11 +133,15 @@ import starsGif from '../Images/galaxy.gif'
 
 const Section = styled.section`
   position: relative;
-  padding: 100px 20px;
+  // padding: 50px 20px;
   text-align: center;
   overflow: hidden;
 //   z-index: 1;
   background: url(${starsGif}) center/cover no-repeat;
+  padding-top:0px;
+  padding-bottom:50px;
+  padding-left:20px;
+  padding-right:20px;
 
   &::before {
     content: "";

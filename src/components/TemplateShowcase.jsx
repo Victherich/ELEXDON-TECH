@@ -12,7 +12,7 @@ const float = keyframes`
 
 const Section = styled.section`
   position: relative;
-  padding: 100px 20px;
+  padding: 70px 20px;
   background: linear-gradient(135deg, #f0f4ff, #ffffff);
   overflow: hidden;
 `;
