@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import styled from 'styled-components';
 import dedicatedHeroImg from '../Images/dedicatedhosting.jpg'; // Replace with your actual image
 import Features from './Features';
@@ -170,6 +170,24 @@ const tldTitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle1 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle2 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
+
+const [dedicatedProducts, setDedicatedProducts]=useState([]);
+
+
+
+useEffect(() => {
+  fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_dedicated_hosting_products.php")
+    .then(res => res.json())
+    .then(data => {
+      if (data.products && data.products.product) {
+        setDedicatedProducts(data.products.product);
+      } else {
+        console.error("No products found:", data);
+      }
+    })
+    .catch(err => console.error("Fetch error:", err));
+}, []);
+
 
   return (
     <div>

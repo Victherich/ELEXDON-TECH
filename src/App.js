@@ -30,6 +30,8 @@ import ForgotPasswordPage from './components/ForgotPassword';
 import AffiliatePage from './components/AffiliatePage';
 import Announcement from './components/Announcement';
 import KnowledgeBasePage from './components/KnowledgeBasePage';
+import HostingCheckoutForm from './components/HostingCheckoutForm';
+import InvoicePage from './components/InvoicePage';
 
 function App() {
   return (
@@ -60,7 +62,8 @@ function App() {
           <Route path='/affiliate' element={<AffiliatePage/>}/>
           <Route path='/announcement' element={<Announcement/>}/>
           <Route path='knowledgebase' element={<KnowledgeBasePage/>}/>
-        
+          <Route path='/hostingcheckout/:pid' element={<HostingCheckoutForm/>}/>
+        <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
         </Routes>
         <Hero2/>
         <Footer/>

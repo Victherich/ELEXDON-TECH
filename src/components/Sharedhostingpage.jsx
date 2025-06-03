@@ -8,6 +8,9 @@ import Border from './Border';
 import 'animate.css'
 import useAnimateOnScroll from './useAnimateOnScroll';
 import Features2 from './Features2';
+import { useEffect, useState } from 'react';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 // === Styled Components ===
 const HeroSection = styled.section`
@@ -147,6 +150,51 @@ const WebhostingPage = () => {
   const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 
 
+
+   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+
+
+  // useEffect(() => {
+  //   axios.get('https://hotsalesng.com/api_elexdonhost/get_shared_hosting_products.php')
+  //     .then(response => {
+  //       if (response.data.success) {
+  //         setProducts(response.data.products);
+  //         console.log(response.data)
+  //       } else {
+  //         console.error('Error:', response.data.error);
+  //       }
+  //     })
+  //     .catch(err => console.error('API Error:', err));
+  // }, []);
+
+
+useEffect(() => {
+  fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_shared_hosting_products.php")
+    .then(res => res.json())
+    .then(data => {
+      if (data.products && data.products.product) {
+        setProducts(data.products.product);
+        console.log(data);
+      } else {
+        console.error("No products found:", data);
+      }
+    })
+    .catch(err => console.error("Fetch error:", err));
+}, []);
+
+  const parseFeatures = (description) => {
+    return description
+      .split(/\r\n|\n|\r/)
+      .filter(line => line.trim() !== "")
+      .map((feature, index) => <li key={index}>{feature}</li>);
+  };
+
+
+
+ 
+
+
   return (
     <div>
       <HeroSection>
@@ -173,7 +221,7 @@ const WebhostingPage = () => {
 
       <PricingSection>
         <PricingTitle>Plans and Pricing</PricingTitle>
-        <PricingGrid>
+        {/* <PricingGrid>
           <Card>
             <h3>STARTER</h3>
             <p>10 GB SSD Web Space</p>
@@ -236,7 +284,66 @@ const WebhostingPage = () => {
             </ul>
             <button>Order Now</button>
           </Card>
-        </PricingGrid>
+        </PricingGrid> */}
+
+
+   <PricingGrid>
+  {products.map((product) => {
+    const pricing = product.pricing?.NGN;
+    const monthly = pricing?.monthly;
+    const annually = pricing?.annually;
+    const prefix = pricing?.prefix || "";
+    const suffix = pricing?.suffix || "";
+
+    return (
+      <Card key={product.pid}>
+        <h3>{product.name}</h3>
+        
+        {/* Show first line of description */}
+        <p style={{color:"#444"}}>SSD - {product.description.split(/\r\n|\n|\r/)[0]}</p>
+
+        {/* Pricing section */}
+        {monthly !== "-1.00" && (
+          <p style={{color:"#444"}}><strong>{prefix}{parseFloat(monthly).toLocaleString()} / month</strong></p>
+        )}
+        {annually !== "-1.00" && (
+          <p style={{color:"#444"}}><strong>{prefix}{parseFloat(annually).toLocaleString()} / year</strong></p>
+        )}
+
+        {/* Features list */}
+        <ul>
+          {product.description
+            .split(/\r\n|\n|\r/)
+            .filter((line) => line.trim() !== "")
+            .map((line, index) => (
+              <li key={index}>{line}</li>
+            ))}
+        </ul>
+
+        {/* Order button */}
+        <button
+      onClick={()=>navigate(`/hostingcheckout/${product.pid}`)}
+        >
+          Order Now
+        </button>
+
+{/* <button
+  onClick={() =>
+    window.open(
+      `https://portal.elexdonhost.com.ng/cart.php?a=add&pid=${product.pid}&carttpl=standard_cart`,
+      '_blank'
+    )
+  }
+>
+  Order Now
+</button> */}
+
+
+      </Card>
+    );
+  })}
+</PricingGrid>
+
        
       </PricingSection>
        <CPanelShowcase/>

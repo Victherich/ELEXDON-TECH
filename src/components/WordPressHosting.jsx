@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCheckCircle } from 'react-icons/fa';
 import hostingHeroImg from '../Images/wpbg.png';
@@ -136,13 +136,29 @@ const CTAButton = styled.button`
 `;
 
 const WordPressHosting = () => {
-
+const [wordpressProducts, setWordpressProducts]=useState([]);
      const heroTitleAnim = useAnimateOnScroll('animate__fadeInDown animate__slower');
 const heroSubtitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const tldTitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle1 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle2 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
+
+
+useEffect(() => {
+  fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_wordpress_hosting_products.php")
+    .then(res => res.json())
+    .then(data => {
+      if (data.products?.product) {
+        setWordpressProducts(data.products.product);
+        console.log(data)
+      } else {
+        console.error("No WordPress products found:", data);
+      }
+    })
+    .catch(err => console.error("Fetch error:", err));
+}, []);
+
 
 
 
@@ -166,7 +182,7 @@ const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 
       <Section>
         <SectionTitle>Choose Your Perfect Plan</SectionTitle>
-        <PlansGrid>
+        {/* <PlansGrid>
           {[{
             name: 'E-Basic',
             price: '₦15,000/yr',
@@ -222,7 +238,31 @@ const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
               <CTAButton>ORDER NOW</CTAButton>
             </PlanCard>
           ))}
-        </PlansGrid>
+        </PlansGrid> */}
+
+        <PlansGrid>
+  {wordpressProducts.map((product, i) => {
+    const pricing = product.pricing?.NGN || {};
+    const yearly = pricing.annually !== "-1.00" ? `${pricing.prefix}${parseInt(pricing.annually).toLocaleString()}/yr` : null;
+    const monthly = pricing.monthly !== "-1.00" ? `${pricing.prefix}${parseInt(pricing.monthly).toLocaleString()}/mo` : null;
+    const features = product.description?.split(/\r\n|\n|\r/).filter(Boolean) || [];
+
+    return (
+      <PlanCard key={i}>
+        <h3>{product.name}</h3>
+        {yearly && <Price>{yearly}</Price>}
+        {monthly && <p>{monthly}</p>}
+        <FeaturesList>
+          {features.map((feat, idx) => (
+            <li key={idx}><FaCheckCircle /> {feat}</li>
+          ))}
+        </FeaturesList>
+        <CTAButton>ORDER NOW</CTAButton>
+      </PlanCard>
+    );
+  })}
+</PlansGrid>
+
       </Section>
 
       <Section>
