@@ -5,6 +5,7 @@ import domainheroimg from '../Images/domainsbg.jpg'
 import useAnimateOnScroll from './useAnimateOnScroll';
 import 'animate.css';
 import DomainNameSpace from './DomainNameSpace';
+import DomainSearch from './DomainSearch';
 
 const HeroSection = styled.section`
   background-image: url(${domainheroimg});
@@ -198,12 +199,14 @@ const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
         <HeroContent>
           <Title ref={heroTitleAnim.ref} className={heroTitleAnim.className}>Domain Registration</Title>
           <Subtitle ref={heroSubtitleAnim.ref} className={heroSubtitleAnim.className}>Join our awesome customers. Domain is where it starts. Choose your domain today!</Subtitle>
-          <SearchBox>
+          {/* <SearchBox>
             <input type="text" placeholder="Search your domain (e.g. yourname.com)" />
             <button>Search</button>
-          </SearchBox>
+          </SearchBox> */}
         </HeroContent>
+
       </HeroSection>
+      <DomainSearch/>
 {/* 
       <TLDSection>
         <TLDTitle  ref={tldTitleAnim.ref} className={tldTitleAnim.className}>Popular TLDs</TLDTitle>

@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import supportImg from '../Images/helpdesk.jpg'; // Replace with your actual image
 import ticketImg from '../Images/helpdesk2.jpg'; // Another support image
+import Swal from 'sweetalert2';
 
 const PageContainer = styled.div`
   font-family: 'Segoe UI', sans-serif;
@@ -131,6 +132,107 @@ const Sidebar = styled.div`
 `;
 
 const SupportPage = () => {
+  const [departments, setDepartments]=useState([]);
+  // console.log(departments)
+   const [form, setForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    department: '',
+    priority: 'Medium',
+    message: '',
+    file: null,
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
+
+
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user?.id) {
+      Swal.fire('Login Required', 'Please log in to submit a ticket.', 'warning');
+      return;
+    }
+
+    if (!form.subject || !form.message || !form.department) {
+      Swal.fire('Missing Fields', 'Please complete all required fields.', 'info');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('clientid', user.id);
+    formData.append('name', form.name);
+    formData.append('email', form.email);
+    formData.append('subject', form.subject);
+    formData.append('deptid', form.department);
+    formData.append('priority', form.priority);
+    formData.append('message', form.message);
+    if (form.file) formData.append('attachments[]', form.file);
+
+    Swal.fire({ title: 'Submitting...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+    try {
+      const res = await fetch('https://www.elexdonhost.com.ng/api_elexdonhost/open_ticket.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        Swal.fire('Success', 'Your ticket has been submitted!', 'success');
+        setForm({
+          name: '',
+          email: '',
+          subject: '',
+          department: '',
+          priority: 'Medium',
+          message: '',
+          file: null,
+        });
+      } else {
+        Swal.fire('Error', result.message || 'Failed to submit ticket.', 'error');
+      }
+    } catch (err) {
+      Swal.fire('Error', 'Failed to send ticket. Try again later.', 'error');
+    }
+  };
+
+
+
+async function fetchDepartments() {
+  try {
+    const response = await fetch(
+      'https://www.elexdonhost.com.ng/api_elexdonhost/get_support_departments.php'
+    );
+    const data = await response.json();
+
+    if (data.success) {
+      setDepartments(data.departments); // returns an array of departments
+    } else {
+      console.error('Failed to load departments:', data.message);
+      return [];
+    }
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+    return [];
+  }
+}
+
+
+useEffect(()=>{
+  fetchDepartments();
+},[])
+
   return (
     <PageContainer>
       <HeroSection>
@@ -141,30 +243,46 @@ const SupportPage = () => {
       </HeroSection>
 
       <ContentGrid>
-        <FormCard>
-          <h2>Submit a Support Ticket</h2>
-          <Input type="text" placeholder="Your Name" />
-          <Input type="email" placeholder="Email Address" />
-          <Input type="text" placeholder="Subject" />
-          <Select>
-            <option>Choose Department</option>
-            <option>Sales</option>
-            <option>Technical Support</option>
-            <option>Billing</option>
-          </Select>
-          <Select>
-            <option>Set Priority</option>
-            <option>Low</option>
-            <option selected>Medium</option>
-            <option>High</option>
-          </Select>
-          <TextArea placeholder="Type your message here..." />
-          <FileInput type="file" />
-          <p style={{ fontSize: '0.8rem', color: '#64748b' }}>
-            Allowed file types: .jpg, .gif, .jpeg, .png, .zip, .pdf, .xls, .docx, .txt
-          </p>
-          <Button>Submit Ticket</Button>
-        </FormCard>
+         <form onSubmit={handleSubmit}>
+      <FormCard>
+        <h2>Submit a Support Ticket</h2>
+
+        <Input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your Name" required />
+        <Input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email Address" required />
+        <Input type="text" name="subject" value={form.subject} onChange={handleChange} placeholder="Subject" required />
+
+        <Select name="department" value={form.department} onChange={handleChange} required>
+          <option value="">-- Select Department --</option>
+          {departments.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.name}
+            </option>
+          ))}
+        </Select>
+
+        <Select name="priority" value={form.priority} onChange={handleChange}>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+        </Select>
+
+        <TextArea
+          name="message"
+          value={form.message}
+          onChange={handleChange}
+          placeholder="Type your message here..."
+          required
+        />
+
+        <FileInput type="file" name="file" onChange={handleChange} />
+
+        <p style={{ fontSize: '0.8rem', color: '#64748b' }}>
+          Allowed file types: .jpg, .gif, .jpeg, .png, .zip, .pdf, .xls, .docx, .txt
+        </p>
+
+        <Button type="submit">Submit Ticket</Button>
+      </FormCard>
+    </form>
 
         <Sidebar>
           <img src={ticketImg} alt="Support illustration" />

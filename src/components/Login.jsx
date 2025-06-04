@@ -3,6 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import bg from '../Images/herobg5.jpg';
 import illustration from '../Images/logo4.jpeg';
+import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContainer = styled.div`
   position: relative;
@@ -98,16 +101,74 @@ const LinkText = styled.p`
 `;
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+
+
+ useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      navigate('/dashboard');
+    }
+  }, []);
+
+
+
+
+
+const handleLogin = async () => {
+  if (!email || !password) {
+    Swal.fire({ icon: 'warning', text: 'Please enter email and password.' });
+    return;
+  }
+
+  try {
+    Swal.fire({
+      title: 'Logging in...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    const res = await fetch('https://www.elexdonhost.com.ng/api_elexdonhost/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    Swal.close(); // close loading
+
+    if (data.success) {
+      Swal.fire({ icon: 'success', text: 'Login successful!' });
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } else {
+      console.log(data);
+      Swal.fire({ icon: 'error', text: data.message || 'Login failed' });
+    }
+  } catch (error) {
+    console.error(error);
+    Swal.close(); // close loading on error too
+    Swal.fire({ icon: 'error', text: 'Server error' });
+  }
+};
+
+
+
+
   return (
     <AuthContainer>
-      <AuthCard>
+       <AuthCard>
         <img src={illustration} alt="Login" style={{ width: '100%', marginBottom: '1rem' }} />
-        <Title>Welcome Back to Elexdon Host</Title>
-        <Input type="email" placeholder="Email Address" />
-        <Input type="password" placeholder="Password" />
-        <Button>Login</Button>
+        <Title>Welcome Back, Please Login</Title>
+        <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Button onClick={handleLogin}>Login</Button>
         <LinkText><a href="/forgot-password">Forgot Password?</a></LinkText>
-        <LinkText>Don't have an account? <a href="/signup">Sign Up</a></LinkText>
       </AuthCard>
     </AuthContainer>
   );

@@ -319,13 +319,17 @@ useEffect(() => {
               <li key={index}>{line}</li>
             ))}
         </ul>
+        
+{/* order button */}
+      <button
+  onClick={() => {
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    navigate(`/hostingcheckout/${product.pid}`);
+  }}
+>
+  Order Now
+</button>
 
-        {/* Order button */}
-        <button
-      onClick={()=>navigate(`/hostingcheckout/${product.pid}`)}
-        >
-          Order Now
-        </button>
 
 {/* <button
   onClick={() =>

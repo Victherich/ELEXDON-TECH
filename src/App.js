@@ -32,6 +32,8 @@ import Announcement from './components/Announcement';
 import KnowledgeBasePage from './components/KnowledgeBasePage';
 import HostingCheckoutForm from './components/HostingCheckoutForm';
 import InvoicePage from './components/InvoicePage';
+import UserDashboard from './components/UserDashboard';
+import DomainRegisterCheckout from './components/DomainRegisterCheckout';
 
 function App() {
   return (
@@ -64,6 +66,8 @@ function App() {
           <Route path='knowledgebase' element={<KnowledgeBasePage/>}/>
           <Route path='/hostingcheckout/:pid' element={<HostingCheckoutForm/>}/>
         <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
+        <Route path='/dashboard' element={<UserDashboard/>}/>
+        <Route path='/domainregistercheckout/:domainname' element={<DomainRegisterCheckout/>}/>
         </Routes>
         <Hero2/>
         <Footer/>
