@@ -5,6 +5,8 @@ import { FaCheckCircle } from 'react-icons/fa';
 import hostingHeroImg from '../Images/wpbg.png';
 import 'animate.css'
 import useAnimateOnScroll from './useAnimateOnScroll';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const PageWrapper = styled.div`
   font-family: 'Segoe UI', sans-serif;
@@ -144,20 +146,53 @@ const pricingTitle1 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle2 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 
+const navigate = useNavigate();
 
-useEffect(() => {
-  fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_wordpress_hosting_products.php")
-    .then(res => res.json())
-    .then(data => {
-      if (data.products?.product) {
-        setWordpressProducts(data.products.product);
-        console.log(data)
-      } else {
-        console.error("No WordPress products found:", data);
-      }
-    })
-    .catch(err => console.error("Fetch error:", err));
-}, []);
+
+
+  useEffect(() => {
+    // Show loading
+    Swal.fire({
+      title: 'Loading plans...',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
+    });
+
+    fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_wordpress_hosting_products.php")
+      .then(res => res.json())
+      .then(data => {
+        Swal.close(); // Close loading regardless
+
+        if (data.products?.product && data.products.product.length > 0) {
+          setWordpressProducts(data.products.product);
+          console.log("Fetched products:", data);
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Plans loaded!',
+            // text: `${data.products.product.length} product(s) found.`,
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        } else {
+          console.error("No WordPress products found:", data);
+          Swal.fire({
+            icon: 'error',
+            title: 'No products found',
+            text: 'WordPress products could not be loaded.',
+          });
+        }
+      })
+      .catch(err => {
+        Swal.close();
+        console.error("Fetch error:", err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to load',
+          text: 'Could not fetch WordPress products. Please try again later.',
+        });
+      });
+  }, []);
 
 
 
@@ -240,6 +275,8 @@ useEffect(() => {
           ))}
         </PlansGrid> */}
 
+
+
         <PlansGrid>
   {wordpressProducts.map((product, i) => {
     const pricing = product.pricing?.NGN || {};
@@ -257,7 +294,12 @@ useEffect(() => {
             <li key={idx}><FaCheckCircle /> {feat}</li>
           ))}
         </FeaturesList>
-        <CTAButton>ORDER NOW</CTAButton>
+        <CTAButton
+         onClick={() => {
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    navigate(`/hostingcheckout/${product.pid}`);
+  }}
+        >ORDER NOW</CTAButton>
       </PlanCard>
     );
   })}

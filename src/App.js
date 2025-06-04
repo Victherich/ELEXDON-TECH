@@ -34,10 +34,13 @@ import HostingCheckoutForm from './components/HostingCheckoutForm';
 import InvoicePage from './components/InvoicePage';
 import UserDashboard from './components/UserDashboard';
 import DomainRegisterCheckout from './components/DomainRegisterCheckout';
+import DomainTransferCheckout from './components/DomainTransferCheckout';
+import AppUpdate from './components/AppUpdate';
 
 function App() {
   return (
     <BrowserRouter>
+    <AppUpdate/>
     <ScrollToTop/>
       <Header/>
         <Routes>
@@ -68,6 +71,7 @@ function App() {
         <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
         <Route path='/dashboard' element={<UserDashboard/>}/>
         <Route path='/domainregistercheckout/:domainname' element={<DomainRegisterCheckout/>}/>
+        <Route path='/domaintransfercheckout/:domainname/:eppcode' element={<DomainTransferCheckout/>}/>
         </Routes>
         <Hero2/>
         <Footer/>

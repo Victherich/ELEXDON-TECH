@@ -31,3 +31,7 @@ export default ContextProvider
 
 
 
+// cpanel database
+// pw: Mikeconnect@5050
+// user: 
+// db: User “elexdonh_db1” was added to the database “elexdonh_db1”.

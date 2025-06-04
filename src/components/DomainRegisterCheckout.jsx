@@ -641,6 +641,7 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  padding-top:80px;
   &::before {
     content: "";
     background: rgba(255, 255, 255, 0.8);
@@ -725,7 +726,7 @@ const Error = styled.p`
   margin-top: 1rem;
 `;
 
-export default function HostingCheckoutPage() {
+export default function DomainRegisterCheckout() {
   const { domainname } = useParams();
   const navigate = useNavigate();
 
@@ -836,8 +837,8 @@ export default function HostingCheckoutPage() {
     <PageWrapper>
       <FormContainer onSubmit={handleSubmit}>
         <Logo src={logo} alt="Elexdon Host Logo" />
-        <Title>Complete Your Hosting Order</Title>
-
+        <Title>Complete Your Domain Registration</Title>
+<Title>Domain Name: <span style={{color:"purple", textDecoration:"underline"}}>{domainname}</span></Title>
         <div style={{ marginBottom: "1rem" }}>
           <label>
             <p>Do you already have an account? Check the box below</p>

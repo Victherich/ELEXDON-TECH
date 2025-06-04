@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import heroBg from '../Images/vpsimg.jpg'; // Replace with your actual background image path
 import Partners from './Partners';
@@ -6,6 +6,7 @@ import psbg6 from '../Images/psbg6.jpg';
 import Border from './Border';
 import 'animate.css'
 import useAnimateOnScroll from './useAnimateOnScroll';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = styled.section`
   background-image: url(${heroBg});
@@ -103,6 +104,7 @@ const PlanCard = styled.div`
     cursor: pointer;
     transition: 0.3s;
 
+
     &:hover {
       background: #339af0;
     }
@@ -181,6 +183,28 @@ const tldTitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle1 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle2 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
+const [vpsPlans, setVpsPlans] = useState([]);
+const [loading, setLoading] = useState(true);
+const navigate = useNavigate();
+
+
+
+
+
+
+useEffect(() => {
+  fetch('https://www.elexdonhost.com.ng/api_elexdonhost/get_vps_hosting_products.php') // replace with your actual PHP endpoint
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.products && data.products.product) {
+        const filtered = data.products.product.filter(p => p.type === "server" || p.type === "hostingaccount" || p.type === "reselleraccount");
+        setVpsPlans(filtered);
+      }
+    })
+    .catch(err => console.error("Error fetching VPS plans:", err))
+    .finally(() => setLoading(false));
+}, []);
+
 
 
 
@@ -205,7 +229,7 @@ const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
       <Section>
         <h2>Awesome Plans and Order Now</h2>
         <p>Choose Which Package Is Best For You</p>
-        <PlanGrid>
+        {/* <PlanGrid>
           <PlanCard>
             <h3>E-solo</h3>
             <p className="price">₦60,000 /mo</p>
@@ -239,7 +263,42 @@ const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
             <p>Best Support 24/7</p>
             <button>Order now</button>
           </PlanCard>
-        </PlanGrid>
+        </PlanGrid> */}
+
+
+        <PlanGrid>
+  {loading ? (
+    <p>Loading plans...</p>
+  ) : vpsPlans.length > 0 ? (
+    vpsPlans.map(plan => (
+      <PlanCard key={plan.pid}>
+        <h3>{plan.name}</h3>
+        <p className="price">
+          {plan.pricing?.NGN?.monthly !== "-1.00"
+            ? `₦${parseFloat(plan.pricing.NGN.monthly).toLocaleString()} /mo`
+            : "Price Unavailable"}
+        </p>
+        <div style={{width:"100%"}}>
+          {plan.description
+            .split(/\r\n|\n|\r/)
+            .filter(line => line.trim() !== "")
+            .map((line, index) => (
+              <p key={index} style={{textAlign:"left"}}>🟢 {line}</p>
+            ))}
+        </div>
+        <button
+        onClick={() => {
+    localStorage.setItem("selectedProduct", JSON.stringify(plan));
+    navigate(`/hostingcheckout/${plan.pid}`);
+  }}
+        >Order now</button>
+      </PlanCard>
+    ))
+  ) : (
+    <p>No VPS plans available at the moment.</p>
+  )}
+</PlanGrid>
+
       </Section>
 
       <Section dark style={{backgroundImage:`url(${psbg6})`, backgroundSize:"cover"}}>

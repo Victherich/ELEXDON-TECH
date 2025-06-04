@@ -11,6 +11,7 @@ import Features2 from './Features2';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 // === Styled Components ===
 const HeroSection = styled.section`
@@ -155,33 +156,56 @@ const WebhostingPage = () => {
   const navigate = useNavigate();
 
 
-  // useEffect(() => {
-  //   axios.get('https://hotsalesng.com/api_elexdonhost/get_shared_hosting_products.php')
-  //     .then(response => {
-  //       if (response.data.success) {
-  //         setProducts(response.data.products);
-  //         console.log(response.data)
-  //       } else {
-  //         console.error('Error:', response.data.error);
-  //       }
-  //     })
-  //     .catch(err => console.error('API Error:', err));
-  // }, []);
 
 
-useEffect(() => {
-  fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_shared_hosting_products.php")
-    .then(res => res.json())
-    .then(data => {
-      if (data.products && data.products.product) {
-        setProducts(data.products.product);
-        console.log(data);
-      } else {
-        console.error("No products found:", data);
-      }
-    })
-    .catch(err => console.error("Fetch error:", err));
-}, []);
+ useEffect(() => {
+    // Show loading modal
+    Swal.fire({
+      title: 'Loading  plans...',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
+    });
+
+    fetch("https://www.elexdonhost.com.ng/api_elexdonhost/get_shared_hosting_products.php")
+      .then(res => res.json())
+      .then(data => {
+        Swal.close(); // Always close loading modal
+
+        if (data.products?.product && data.products.product.length > 0) {
+          setProducts(data.products.product);
+          console.log("Shared hosting products:", data);
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Plans loaded',
+            // text: `${data.products.product.length} shared hosting plan(s) found.`,
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        } else {
+          console.error("No shared hosting products found:", data);
+          Swal.fire({
+            icon: 'warning',
+            title: 'No plans available',
+            text: 'No shared hosting products were found.',
+          });
+        }
+      })
+      .catch(err => {
+        Swal.close();
+        console.error("Fetch error:", err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error loading plans',
+          text: 'Failed to fetch shared hosting plans. Please try again later.',
+        });
+      });
+  }, []);
+
+
+
+
+
 
   const parseFeatures = (description) => {
     return description
@@ -221,70 +245,7 @@ useEffect(() => {
 
       <PricingSection>
         <PricingTitle>Plans and Pricing</PricingTitle>
-        {/* <PricingGrid>
-          <Card>
-            <h3>STARTER</h3>
-            <p>10 GB SSD Web Space</p>
-            <ul>
-              <li>Free SSL</li>
-              <li>Unlimited Bandwidth</li>
-              <li>Unlimited MySQL Databases</li>
-              <li>5 Email Accounts</li>
-              <li>Unlimited Website Builder</li>
-              <li>Control Panel</li>
-              <li>Unlimited FTP Accounts</li>
-              <li>Daily Backups</li>
-            </ul>
-            <button>Order Now</button>
-          </Card>
-
-          <Card>
-            <h3>BUSINESS</h3>
-            <p>15 GB SSD Web Space</p>
-            <ul>
-              <li>Unlimited Bandwidth</li>
-              <li>Unlimited MySQL Databases</li>
-              <li>Free 256-bit SSL Certificate</li>
-              <li>Control Panel</li>
-              <li>Unlimited Email Accounts</li>
-              <li>Free .com.ng Domain</li>
-              <li>Daily Backups</li>
-            </ul>
-            <button>Order Now</button>
-          </Card>
-
-          <Card>
-            <h3>DEVELOPER</h3>
-            <p>25 GB SSD Web Space</p>
-            <ul>
-              <li>Unlimited Bandwidth</li>
-              <li>Free Unlimited SSL Certificate</li>
-              <li>Cpanel + PHP 8.1</li>
-              <li>Unlimited Email Accounts</li>
-              <li>Unlimited Subdomains</li>
-              <li>Free .com.ng</li>
-              <li>Daily Backups</li>
-              <li>User Friendly Access Manager</li>
-            </ul>
-            <button>Order Now</button>
-          </Card>
-
-          <Card>
-            <h3>MEGA PRO</h3>
-            <p>Unlimited SSD Web Space</p>
-            <ul>
-              <li>10 Hosted Domains</li>
-              <li>DNS Management</li>
-              <li>Unlimited Bandwidth</li>
-              <li>Unlimited Email Accounts</li>
-              <li>Unlimited Website Builder</li>
-              <li>Daily Server Backups</li>
-              <li>Unlimited MySQL</li>
-              <li>User Friendly Access Manager</li>
-            </ul>
-            <button>Order Now</button>
-          </Card>
-        </PricingGrid> */}
+   
 
 
    <PricingGrid>
@@ -319,7 +280,7 @@ useEffect(() => {
               <li key={index}>{line}</li>
             ))}
         </ul>
-        
+
 {/* order button */}
       <button
   onClick={() => {
@@ -329,18 +290,6 @@ useEffect(() => {
 >
   Order Now
 </button>
-
-
-{/* <button
-  onClick={() =>
-    window.open(
-      `https://portal.elexdonhost.com.ng/cart.php?a=add&pid=${product.pid}&carttpl=standard_cart`,
-      '_blank'
-    )
-  }
->
-  Order Now
-</button> */}
 
 
       </Card>

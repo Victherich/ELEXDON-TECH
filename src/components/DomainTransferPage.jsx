@@ -154,11 +154,13 @@
 
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import transferHero from '../Images/domaintransferimg.jpg'; // Replace with actual image path
 import useAnimateOnScroll from './useAnimateOnScroll';
 import 'animate.css'
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Hero = styled.section`
   background-image: url(${transferHero});
@@ -317,6 +319,169 @@ const DomainTransferPage = () => {
   const pricingTitle2 = useAnimateOnScroll('animate__fadeInUp animate__slower');
   const pricingTitle3 = useAnimateOnScroll('animate__fadeInUp animate__slower');
 
+
+  const [domain, setDomain] = useState("");
+  const [eppCode, setEppCode] = useState("");
+  const navigate = useNavigate();
+  const domaintype = 'transfer'
+
+
+// const handleProceed = async () => {
+//   if (!domain || !eppCode) {
+//     Swal.fire({
+//       icon: 'warning',
+//       title: 'Missing input',
+//       text: 'Please enter both domain and EPP code.',
+//     });
+//     return;
+//   }
+
+//   Swal.fire({
+//     title: 'Checking domain...',
+//     allowOutsideClick: false,
+//     didOpen: () => Swal.showLoading(),
+//   });
+
+//   try {
+//     const res = await fetch("https://www.elexdonhost.com.ng/api_elexdonhost/check_domain.php", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ domain, type: "transfer" }),
+//     });
+//     const data = await res.json();
+
+//     Swal.close();
+
+//     if (data.available) {  // <-- check 'available' from backend
+//       Swal.fire({
+//         icon: 'success',
+//         title: 'Domain verified',
+//         text: 'You can proceed with the transfer.',
+//         timer: 1500,
+//         showConfirmButton: false,
+//       }).then(() => {
+//         navigate(`/domaintransfercheckout/${encodeURIComponent(domain)}/${encodeURIComponent(eppCode)}`);
+//       });
+//     } else {
+//       Swal.fire({
+//         icon: 'error',
+//         title: 'Domain check failed',
+//         text: data.error || 'Domain is not eligible for transfer.',
+//       });
+//     }
+//   } catch (err) {
+//     Swal.close();
+//     Swal.fire({
+//       icon: 'error',
+//       title: 'Network error',
+//       text: 'Failed to check domain. Please try again later.',
+//     });
+//     console.error(err);
+//   }
+// };
+
+
+  const checkDomainAvailability = async () => {
+    if (!domain) {
+      Swal.fire({ icon: "warning", text: "Please enter a domain." });
+      return;
+    }
+
+
+     if (!eppCode) {
+      Swal.fire({ icon: "warning", text: "Please enter a epp code." });
+      return;
+    }
+    // if (!form.domaintype) {
+    //   Swal.fire({ icon: "warning", text: "Please select a domain type." });
+    //   return;
+    // }
+
+    //    if (!form.tld) {
+    //   Swal.fire({ icon: "warning", text: "Please select a TLD." });
+    //   return;
+    // }
+
+   
+
+    // setCheckingDomain(true);
+    // setDomainStatus(null);
+
+    Swal.fire({
+      title: "Checking domain...",
+      text: "Please wait while we check availability.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      const res = await fetch("https://www.elexdonhost.com.ng/api_elexdonhost/check_domain.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ domain: domain, type: domaintype }),
+      });
+
+      const data = await res.json();
+
+      if (domaintype === "register") {
+        if (data.available) {
+          // setDomainStatus("available");
+          Swal.fire({
+            icon: "success",
+            title: "Domain Available",
+            text: "Great! The domain is available for registration.",
+          });
+        } else {
+          // setDomainStatus("unavailable");
+          Swal.fire({
+            icon: "error",
+            title: "Domain Unavailable",
+            text: "Sorry, that domain is not available for registration.",
+          });
+        }
+      } else if (domaintype === "transfer" || domaintype === "owndomain") {
+        if (data.available) {
+          // If domain is available, it means NOT registered, so can't transfer/use own domain
+          // setDomainStatus("unavailable");
+          Swal.fire({
+            icon: "error",
+            title: "Domain Not Registered",
+            text: "This domain is not registered and cannot be transferred or used as your own.",
+          });
+        } else {
+          // setDomainStatus("available");
+          Swal.fire({
+            icon: "success",
+            title: "Domain Registered",
+            text: "The domain is registered and can be transferred or used.",
+          });
+        }
+      } else {
+        // setDomainStatus("error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Invalid domain type selected.",
+        });
+      }
+    } catch (err) {
+      console.error("Domain check error:", err);
+      // setDomainStatus("error");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "There was an error checking the domain. Please try again.",
+      });
+    } finally {
+      // setCheckingDomain(false);
+    }
+  };
+
+
+
+
   return (
     <>
       <Hero>
@@ -335,10 +500,11 @@ const DomainTransferPage = () => {
 
         <Section>
           <h2 ref={tldTitleAnim.ref} className={tldTitleAnim.className}>Single Domain Transfer</h2>
-          <Input placeholder="example.com" />
-          <Input placeholder="Epp Code / Auth Code" />
+         <Input placeholder="example.com" value={domain} onChange={(e) => setDomain(e.target.value)} />
+      <Input placeholder="EPP Code / Auth Code" value={eppCode} onChange={(e) => setEppCode(e.target.value)} />
+     
           <br />
-          <Button>Add to Cart</Button>
+          <Button onClick={checkDomainAvailability}>Proceed</Button>
           <p style={{ fontSize: '0.85rem', marginTop: '10px' }}>
             * Excludes certain TLDs and recently renewed domains
           </p>
