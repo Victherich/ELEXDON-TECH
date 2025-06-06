@@ -4,6 +4,7 @@ import heroBg from '../Images/kbp2.png'; // Your background image
 import supportIcon from '../Images/kbp1.png'; // Optional category icon
 import useAnimateOnScroll from './useAnimateOnScroll';
 import 'animate.css'
+import KnowledgeBaseTitle from './KnowledgeBaseArticles/KnowledgeBaseTitles';
 
 const PageContainer = styled.div`
   font-family: 'Segoe UI', sans-serif;
@@ -149,11 +150,11 @@ const categories = [
 const faqs = [
   {
     question: 'How do I point my domain to Elexdon Host?',
-    answer: 'You can point your domain by updating its DNS records to our nameservers: ns1.elexdon.com and ns2.elexdon.com.'
+    answer: 'You can point your domain by updating its DNS records to our nameservers: ns1.elexdonhost.com.ng and ns2.elexdonhost.com.ng'
   },
   {
     question: 'How can I upgrade my hosting plan?',
-    answer: 'Simply go to your Client Area > Services > Choose Plan > Click Upgrade. Payment is prorated.'
+    answer: 'Simply go to your Client Area > Services > Choose Plan > Click Upgrade.Your payment is protected.'
   },
   {
     question: 'What’s included in technical support?',
@@ -183,7 +184,7 @@ const KnowledgeBasePage = () => {
       </Hero>
 
       <Section>
-        <SearchBar placeholder="Search articles, FAQs, topics..." />
+        {/* <SearchBar placeholder="Search articles, FAQs, topics..." /> */}
 
         <SectionTitle>Categories</SectionTitle>
         <Grid>
@@ -195,6 +196,8 @@ const KnowledgeBasePage = () => {
             </Card>
           ))}
         </Grid>
+
+        <KnowledgeBaseTitle/>
 
         <FaqSection>
           <SectionTitle>Frequently Asked Questions</SectionTitle>

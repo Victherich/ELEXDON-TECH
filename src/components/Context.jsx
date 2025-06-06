@@ -35,3 +35,17 @@ export default ContextProvider
 // pw: Mikeconnect@5050
 // user: 
 // db: User “elexdonh_db1” was added to the database “elexdonh_db1”.
+
+
+
+// initail password reset email tempalte
+// To reset your password, please click on the link below.
+
+// Reset your password
+
+// If you're having trouble, try copying and pasting the following URL into your browser:
+// {$reset_password_url}
+
+// If you did not request this reset, you can ignore this email. It will expire in 2 hours time.
+
+// {$signature}

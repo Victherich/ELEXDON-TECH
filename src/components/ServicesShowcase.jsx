@@ -127,6 +127,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaServer, FaGlobe, FaLock } from 'react-icons/fa';
 import starsGif from '../Images/galaxy.gif'
+import { useNavigate } from 'react-router-dom';
 
 // 🔥 Replace with your own starry GIF URL
 // const starsGif = 'https://media.giphy.com/media/l0HlD5zqKFPvXkX1O/giphy.gif';
@@ -236,6 +237,7 @@ const Button = styled.a`
   text-decoration: none;
   font-weight: bold;
   transition: 0.3s ease;
+  cursor:pointer;
 
   &:hover {
     background: linear-gradient(90deg, #fcd34d, #facc15);
@@ -244,6 +246,7 @@ const Button = styled.a`
 `;
 
 const ServicesShowcase = () => {
+  const navigate = useNavigate();
   return (
     <Section>
       <Heading>Check Our Awesome Services, And Order Now</Heading>
@@ -256,28 +259,28 @@ const ServicesShowcase = () => {
           <IconWrapper><FaServer /></IconWrapper>
           <Title>WEB HOSTING</Title>
           <Text>Our web hosting is great for static websites, database-driven CMS, and custom apps.</Text>
-          <Button href="/sharedhosting">Find Out More</Button>
+          <Button  onClick={()=>navigate('/sharedhosting')}>Find Out More</Button>
         </GlowCard>
 
         <GlowCard>
           <IconWrapper><FaGlobe /></IconWrapper>
           <Title>DOMAIN NAMES</Title>
           <Text>Secure your online identity today. Even if you’re not ready to build a website.</Text>
-          <Button href="/domainspage">Find Out More</Button>
+          <Button onClick={()=>navigate('/domainspage')}>Find Out More</Button>
         </GlowCard>
 
         <GlowCard>
           <IconWrapper><FaLock /></IconWrapper>
           <Title>SSL CERTIFICATES</Title>
           <Text>Our SSL certificates ensure your website is encrypted & safe from threats.</Text>
-          <Button href="/sslpage">Find Out More</Button>
+          <Button  onClick={()=>navigate('/sslpage')}>Find Out More</Button>
         </GlowCard>
 
         <GlowCard>
           <IconWrapper><FaLock /></IconWrapper>
           <Title>DEDICATED HOSTING</Title>
           <Text>Our SSL certificates ensure your website is encrypted & safe from threats.</Text>
-          <Button href="/dedicatedhosting">Find Out More</Button>
+          <Button onClick={()=>navigate('/dedicatedhosting')}>Find Out More</Button>
         </GlowCard>
       </CardsContainer>
     </Section>

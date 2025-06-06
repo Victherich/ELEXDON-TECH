@@ -338,7 +338,7 @@ useEffect(()=>{
                </Dropdown>}
              </li>
             <li onClick={()=>setNavOpen(false)}><NavLink to="/support">Support</NavLink></li>
-               {user ? (
+               {/* {user ? (
         <li style={{ color: '#fff', cursor: 'default', fontWeight: '500', marginTop: '1px' }}>
           <NavLink to='/dashboard'>
             Welcome, {user.name.slice(0,3)}
@@ -348,15 +348,26 @@ useEffect(()=>{
         <li onClick={() => setNavOpen(false)}>
           <NavLink to="/login">Login</NavLink>
         </li>
-      )}
+      )} */}
 
- {/* <li onClick={handleDropdownToggle4} onMouseEnter={()=>{setDropdownOpen4(true);setDropdownOpen(false); setDropdownOpen2(false); setDropdownOpen3(false);}}>
+
+
+
+       {user ? (
+        <li style={{ color: '#fff', cursor: 'default', fontWeight: '500', marginTop: '1px' }}>
+          <NavLink to='/dashboard'>
+            Welcome, {user.name.slice(0,3)}
+          </NavLink>
+        </li>
+      ):(
+
+ <li onClick={handleDropdownToggle4} onMouseEnter={()=>{setDropdownOpen4(true);setDropdownOpen(false); setDropdownOpen2(false); setDropdownOpen3(false);}}>
               <li style={{ color: '#fff', cursor: 'pointer' , fontWeight:"500",marginTop:"5px"}}>ACCOUNT ▾</li>
               {dropdownOpen4&& <Dropdown open={dropdownOpen4} ref={menuRef4} style={{left:"70%"}}>
-                 <li onClick={()=>setNavOpen(false)}><NavLink to="/signup">Sign Up</NavLink></li>
+                 <li onClick={()=>setNavOpen(false)}><NavLink to="/signup">Register</NavLink></li>
                  <li onClick={()=>setNavOpen(false)}><NavLink to="/login">Login</NavLink></li>
                </Dropdown>}
-      </li> */}
+      </li>)}
 
             {/* <li onClick={()=>setNavOpen(false)}><NavLink to="/blogs">Blogs</NavLink></li> */}
             {/* <li onClick={()=>setNavOpen(false)}><NavLink to="/contactus">Contact</NavLink></li> */}

@@ -195,7 +195,7 @@ const UserDashboard = () => {
   const renderContent = () => {
     switch (activeMenu) {
       case 'profile':
-        return  <UserProfile/>;
+        return  <UserProfile  handleMenuClick={handleMenuClick}/>;
 
          case 'myinvoices':
         return  <UserInvoicesPage/>;

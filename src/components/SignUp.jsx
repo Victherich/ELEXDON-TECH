@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import bg from '../Images/herobg5.jpg';
 import illustration from '../Images/logo4.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContainer = styled.div`
   position: relative;
@@ -102,17 +103,22 @@ const LinkText = styled.p`
 `;
 
 const SignupPage = () => {
+const navigate = useNavigate();
+
   return (
     <AuthContainer>
       <AuthCard>
         <img src={illustration} alt="Signup" style={{ width: '100%', marginBottom: '1rem' }} />
         <Title>Create Your Elexdon Host Account</Title>
-        <Input type="text" placeholder="Full Name" />
+        {/* <Input type="text" placeholder="Full Name" />
         <Input type="email" placeholder="Email Address" />
         <Input type="password" placeholder="Password" />
-        <Input type="password" placeholder="Confirm Password" />
-        <Button>Sign Up</Button>
-        <LinkText>Already have an account? <a href="/login">Login</a></LinkText>
+        <Input type="password" placeholder="Confirm Password" /> */}
+        <Title>
+          To Register with us , 
+        </Title>
+        <Button onClick={()=>navigate('/sharedhosting')}>Please purchase a product</Button>
+        <LinkText>Already have an account? <a onClick={()=>navigate('/login')} style={{cursor:"pointer"}}>Login</a></LinkText>
       </AuthCard>
     </AuthContainer>
   );

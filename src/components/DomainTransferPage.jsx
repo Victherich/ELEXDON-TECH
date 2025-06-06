@@ -161,6 +161,7 @@ import useAnimateOnScroll from './useAnimateOnScroll';
 import 'animate.css'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import DomainTransferInstructions from './DomainTransferInstructions';
 
 const Hero = styled.section`
   background-image: url(${transferHero});
@@ -323,7 +324,9 @@ const DomainTransferPage = () => {
   const [domain, setDomain] = useState("");
   const [eppCode, setEppCode] = useState("");
   const navigate = useNavigate();
-  const domaintype = 'transfer'
+  const domaintype = 'register'
+
+  // const type = 'register'
 
 
 // const handleProceed = async () => {
@@ -392,24 +395,11 @@ const DomainTransferPage = () => {
       Swal.fire({ icon: "warning", text: "Please enter a epp code." });
       return;
     }
-    // if (!form.domaintype) {
-    //   Swal.fire({ icon: "warning", text: "Please select a domain type." });
-    //   return;
-    // }
 
-    //    if (!form.tld) {
-    //   Swal.fire({ icon: "warning", text: "Please select a TLD." });
-    //   return;
-    // }
-
-   
-
-    // setCheckingDomain(true);
-    // setDomainStatus(null);
 
     Swal.fire({
       title: "Checking domain...",
-      text: "Please wait while we check availability.",
+      text: "Please wait while we check the domain.",
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -429,22 +419,29 @@ const DomainTransferPage = () => {
         if (data.available) {
           // setDomainStatus("available");
           Swal.fire({
-            icon: "success",
-            title: "Domain Available",
-            text: "Great! The domain is available for registration.",
+            // icon: "success",
+            // title: "Domain Available",
+            text: " The domain is not yet registered.",
           });
         } else {
           // setDomainStatus("unavailable");
           Swal.fire({
-            icon: "error",
-            title: "Domain Unavailable",
-            text: "Sorry, that domain is not available for registration.",
-          });
+            // icon: "error",
+            // title: "Domain Unavailable",
+            text: "The domain is registered.",
+            confirmButtonText:"Proceed to transfer",
+            showCancelButton:true,
+          }).then((result)=>{
+            if(result.isConfirmed){
+              navigate(`/domaintransfercheckout/${domain}/${eppCode}`)
+            }
+          })
+          
+          ;
         }
       } else if (domaintype === "transfer" || domaintype === "owndomain") {
         if (data.available) {
-          // If domain is available, it means NOT registered, so can't transfer/use own domain
-          // setDomainStatus("unavailable");
+        
           Swal.fire({
             icon: "error",
             title: "Domain Not Registered",
@@ -482,6 +479,117 @@ const DomainTransferPage = () => {
 
 
 
+//   const checkDomainAvailability = async () => {
+//   // Input validation on the frontend
+//   if (!domain || typeof domain !== 'string' || domain.trim() === '') {
+//     Swal.fire({
+//       icon: "warning",
+//       title: "Missing Domain",
+//       text: "Please enter a valid domain name to check.",
+//     });
+//     return null; // Indicate failure
+//   }
+
+//   if (!['register', 'transfer', 'owndomain'].includes(type)) {
+//     Swal.fire({
+//       icon: "error",
+//       title: "Invalid Request Type",
+//       text: "The domain check type is invalid. Please select 'Register', 'Transfer', or 'Use My Own Domain'.",
+//     });
+//     return null; // Indicate failure
+//   }
+
+//   // Show loading indicator
+//   Swal.fire({
+//     title: "Checking Domain...",
+//     html: `<span>Checking availability for <strong>${domain}</strong>...</span>`,
+//     allowOutsideClick: false,
+//     didOpen: () => {
+//       Swal.showLoading();
+//     },
+//   });
+
+//   try {
+//     const response = await fetch("https://www.elexdonhost.com.ng/api_elexdonhost/check_domain.php", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ domain: domain.trim(), type: type }),
+//     });
+
+//     // Check for HTTP errors (e.g., 404, 500)
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+
+//     const data = await response.json();
+// console.log(data)
+//     // Handle potential errors from the PHP script
+//     if (data.error) {
+//       Swal.fire({
+//         icon: "error",
+//         title: "API Error",
+//         text: `An error occurred: ${data.error}. Please try again.`,
+//       });
+//       return null;
+//     }
+
+//     // Process the 'available' status based on the check type
+//     let isSuitable = false;
+//     let title = '';
+//     let text = '';
+//     let icon = '';
+
+//     if (type === "register") {
+//       isSuitable = data.available;
+//       if (isSuitable) {
+//         // icon = "success";
+//         // title = "Domain Available!";
+//         text = `The domain '${domain}' is not yet registered.`;
+//       } else {
+//         // icon = "error";
+//         // title = "Domain Unavailable";
+//         text = ` ${domain}' is already registered.`;
+//       }
+//     }
+    
+//     // else if (type === "transfer" || type === "owndomain") {
+//     //   // For transfer/own domain, 'available' should be false (meaning it's registered)
+//     //   isSuitable = !data.available;
+//     //   if (isSuitable) {
+//     //     icon = "success";
+//     //     title = "Domain Registered!";
+//     //     text = `Good! The domain '${domain}' is registered and can be ${type === 'transfer' ? 'transferred' : 'used'}.`;
+//     //   } else {
+//     //     icon = "error";
+//     //     title = "Domain Not Registered";
+//     //     text = `The domain '${domain}' is not registered and cannot be ${type === 'transfer' ? 'transferred' : 'used as your own'}.`;
+//     //   }
+//     // }
+
+//     Swal.fire({
+//       icon: icon,
+//       title: title,
+//       text: text,
+//     });
+
+//     return isSuitable;
+
+//   } catch (error) {
+//     console.error("Frontend domain check error:", error); // Log the error for debugging
+//     Swal.fire({
+//       icon: "error",
+//       title: "Network Error",
+//       text: "Could not connect to the domain check service. Please check your internet connection or try again later.",
+//     });
+//     return null; // Indicate failure
+//   }
+// };
+
+
+
+
   return (
     <>
       <Hero>
@@ -498,13 +606,16 @@ const DomainTransferPage = () => {
         <Blob2 />
         <Blob3 />
 
+
+<DomainTransferInstructions/>
+
         <Section>
           <h2 ref={tldTitleAnim.ref} className={tldTitleAnim.className}>Single Domain Transfer</h2>
          <Input placeholder="example.com" value={domain} onChange={(e) => setDomain(e.target.value)} />
       <Input placeholder="EPP Code / Auth Code" value={eppCode} onChange={(e) => setEppCode(e.target.value)} />
      
           <br />
-          <Button onClick={checkDomainAvailability}>Proceed</Button>
+          <Button onClick={checkDomainAvailability}>Check</Button>
           <p style={{ fontSize: '0.85rem', marginTop: '10px' }}>
             * Excludes certain TLDs and recently renewed domains
           </p>

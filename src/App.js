@@ -36,6 +36,10 @@ import UserDashboard from './components/UserDashboard';
 import DomainRegisterCheckout from './components/DomainRegisterCheckout';
 import DomainTransferCheckout from './components/DomainTransferCheckout';
 import AppUpdate from './components/AppUpdate';
+import CPanelUnderstandingPage from './components/KnowledgeBaseArticles/CPanelUnderstandingPage';
+import EmailSetupTutorial from './components/KnowledgeBaseArticles/EmailSetupTutorial';
+import NameserverConfigurationPage from './components/KnowledgeBaseArticles/NameserverConfiguration';
+import RegistryCodesPage from './components/KnowledgeBaseArticles/RegistryCodes';
 
 function App() {
   return (
@@ -72,6 +76,13 @@ function App() {
         <Route path='/dashboard' element={<UserDashboard/>}/>
         <Route path='/domainregistercheckout/:domainname' element={<DomainRegisterCheckout/>}/>
         <Route path='/domaintransfercheckout/:domainname/:eppcode' element={<DomainTransferCheckout/>}/>
+
+        {/* knowlegdbase articles */}
+        <Route path='/cpanelunderstanding' element={<CPanelUnderstandingPage/>}/>
+        <Route path='/emailsetuptutorial' element={<EmailSetupTutorial/>}/>
+        <Route path='/nameserverconfiguration' element={<NameserverConfigurationPage/>}/>
+        <Route path='/registrycodes' element={<RegistryCodesPage/>}/>
+        
         </Routes>
         <Hero2/>
         <Footer/>

@@ -233,6 +233,7 @@ const [form, setForm] = useState({
         <Logo src={logo} alt="Elexdon Host Logo" />
         <Title>Complete Your Domain Transfer</Title>
         <Title>Domain Name: <span style={{color:"purple", textDecoration:"underline"}}>{domainname}</span></Title>
+  <Title>Epp Code: <span style={{color:"purple", textDecoration:"underline"}}>{eppcode}</span></Title>
 
         <div style={{ marginBottom: "1rem" }}>
           <label>

@@ -1,19 +1,41 @@
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import ServicesLinks from './ServicesLinks';
 
 const Container = styled.div`
-  max-width: 900px;
+  // max-width: 900px;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 50px 20px;
 //   background: #f7f9fc;
   border-radius: 10px;
 //   box-shadow: 0 8px 30px rgba(0,0,0,0.12);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+
+  @media(max-width:884px){
+   flex-direction:column;
+  }
+ 
+
 `;
 
+const Container2 = styled.div`
+width:100%;
+
+`
+
+
+
+const Container3 = styled.div`
+width:100%;
+
+`
+
 const Header = styled.h1`
-  font-size: 2rem;
+  font-size: 1.2rem;
   color: #2B32B2;
   margin-bottom: 1rem;
 `;
@@ -22,8 +44,13 @@ const Card = styled.div`
   background: rgba(0,0,255,0.1);
   border-radius: 10px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(43,50,178,0.5);
+  box-shadow: 0 4px 15px rgba(43,50,178,0.2);
   margin-bottom: 1.5rem;
+  width:85%;
+
+  @media(max-width:768px){
+    // width:90%;
+  }
 `;
 
 const Label = styled.div`
@@ -33,36 +60,56 @@ const Label = styled.div`
 `;
 
 const Value = styled.div`
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: #222;
   margin-bottom: 1rem;
 `;
 
 const StatsGrid = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 1rem;
   flex-wrap:wrap;
-  gap:20px;
+  gap:5px;
+  width:100%;
+
+   @media(max-width:768px){
+    // width:100%;
+  }
+
+  button{
+  background:#2B32B2;
+  color:white;
+  border:none;
+  border-radius:5px;
+  padding:0px 15px;
+  cursor:pointer;
+
+  &:hover{
+  background:gray;
+  }
+  }
 `;
 
 const StatBox = styled.div`
-  background: rgba(0,0,255,0.7);
+  background: rgba(0,0,255,0.5);
   color:white;
-  padding: 1rem 2rem;
   border-radius: 12px;
   text-align: center;
-  flex: 1;
+  // flex: 1;
   margin: 0 0.5rem;
+  padding:0;
+  width:100px;
+  height:50px;
 
   & h3 {
-    margin-bottom: 0.5rem;
-    font-weight: 700;
+    // margin-bottom: 0.5rem;
+    font-weight: bold;
   }
 
   & p {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: bold;
   }
 `;
 
@@ -92,7 +139,7 @@ const Title = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
-const UserProfile = () => {
+const UserProfile = ({handleMenuClick}) => {
   const [client, setClient] = useState(null);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -235,9 +282,11 @@ const UserProfile = () => {
 
   return (
     <Container>
-      <Header>Welcome, {client?.firstname} {client?.lastname}</Header>
+      
+<Container2>
 
-      <Card>
+  <Header>Welcome, {client?.firstname} {client?.lastname}</Header>
+  <Card>
         <Label>Email</Label>
         <Value>{client?.email}</Value>
 
@@ -253,22 +302,32 @@ const UserProfile = () => {
         </Value>
       </Card>
 
-      {stats && (
+
+
+ {stats && (
         <StatsGrid>
-          <StatBox>
-            <h3>Invoices</h3>
-            <p>{invoices?.length || 0}</p>
-          </StatBox>
-          <StatBox>
-            <h3>Active Services</h3>
-            <p>{services?.length || 0}</p>
-          </StatBox>
-          <StatBox>
-            <h3>Tickets</h3>
-            <p>{tickets.length || 0}</p>
-          </StatBox>
+          <button onClick={()=>handleMenuClick('myinvoices')}>
+            <h3>Invoices ({invoices?.length || 0})</h3>
+            <p></p>
+          </button>
+          <button onClick={()=>handleMenuClick('useractiveservices')}>
+            <h3>Active Services ({services?.length || 0})</h3>
+            <p></p>
+          </button>
+          <button onClick={()=>handleMenuClick('tickets')}>
+            <h3>Tickets ({tickets.length || 0})</h3>
+            <p></p>
+          </button>
         </StatsGrid>
       )}
+
+</Container2>
+    
+
+     <Container3>
+<ServicesLinks/>
+     </Container3>
+      
     </Container>
   );
 };

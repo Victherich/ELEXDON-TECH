@@ -583,7 +583,7 @@ const DomainSearch = () => {
         </Form>
 
         <Title style={{ fontSize: "1rem" }}>
-          .com ₦27,500│.com.ng ₦9,000│.ng ₦17,500│.org ₦30,000│
+          .com ₦27,500│.com.ng ₦9,000│.ng ₦17,500│.org ₦30,000│.net 40000│
         </Title>
 
         {result && (

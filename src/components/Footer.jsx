@@ -374,6 +374,7 @@ import styled from 'styled-components';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import logo from '../Images/ELogo.png'
 import logo2 from '../Images/logo4.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 
 const FooterWrapper = styled.footer`
@@ -498,6 +499,7 @@ const Link = styled.a`
   font-size: 1rem;
   transition: 0.3s;
   font-weight:400;
+  cursor:pointer;
 
   &:hover {
     // color: #b983ff; /* light galaxy purple */
@@ -611,6 +613,8 @@ background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, F
 // ---- Main Footer Component ----
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <FooterWrapper>
       {/* <CurvedTop /> */}
@@ -642,38 +646,37 @@ const Footer = () => {
 
         <Section>
           <Title>Company</Title>
-          <Link href="/aboutus">About Us</Link>
-          <Link href="/blogs">Blogs</Link>
-          <Link href="/affiliate">Affiliate</Link>
-          <Link href="/announcement">Announcement</Link>
+          <Link onClick={()=>navigate('/aboutus')}>About Us</Link>
+          <Link onClick={()=>navigate('/blogs')}>Blogs</Link>
+          <Link onClick={()=>navigate('/affiliate')}>Affiliate</Link>
+          <Link onClick={()=>navigate('/announcement')}>Announcement</Link>
           {/* <Link href="#">Partners</Link> */}
         </Section>
 
         <Section>
           <Title>Hosting</Title>
-          <Link href="/sharedhosting">Shared Hosting</Link>
-          <Link href="/vps">VPS Hosting</Link>
-          <Link href="/dedicatedhosting">Dedicated Servers</Link>
-          <Link href="/resellerhosting">Reseller Hosting</Link>
+          <Link onClick={()=>navigate('/sharedhosting')}>Shared Hosting</Link>
+          <Link onClick={()=>navigate('/vps')}>VPS Hosting</Link>
+          <Link onClick={()=>navigate('/dedicatedhosting')}>Dedicated Servers</Link>
+          <Link onClick={()=>navigate('/resellerhosting')}>Reseller Hosting</Link>
         </Section>
 
         <Section>
           <Title>Domains</Title>
-          <Link href="/domainspage">Register Domain</Link>
-          <Link href="/domaintransfer">Transfer Domain</Link>
-          {/* <Link href="#">WHOIS Lookup</Link> */}
-          <Link href="/freessl">Free SSL</Link>
+          <Link onClick={()=>navigate('/domainspage')}>Register Domain</Link>
+          <Link onClick={()=>navigate('/domaintransfer')}>Transfer Domain</Link>
+          <Link onClick={()=>navigate('/freessl')}>Free SSL</Link>
         </Section>
 
         <Section>
           <Title>Support</Title>
-          <Link href="/contactus">Contact Us</Link>
-          <Link href="/support">Tickets</Link>
-          <Link href="/knowledgebase">Knowledgebase</Link>
+          <Link  onClick={()=>navigate('/contactus')}>Contact Us</Link>
+          <Link  onClick={()=>navigate('/support')}>Tickets</Link>
+          <Link  onClick={()=>navigate('/knowledgebase')}>Knowledgebase</Link>
           
-          <Link href="/privacypolicy">Privacy Policy</Link>
-          <Link href="/refundpolicy">Refund Policy</Link>
-          <Link href="/termsandconditions">Terms of Service</Link>
+          <Link  onClick={()=>navigate('/privacypolicy')}>Privacy Policy</Link>
+          <Link  onClick={()=>navigate('/refundpolicy')}>Refund Policy</Link>
+          <Link  onClick={()=>navigate('/termsandconditions')}>Terms of Service</Link>
         </Section>
 
         <SectionN >

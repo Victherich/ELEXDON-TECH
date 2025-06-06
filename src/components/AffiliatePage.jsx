@@ -9,6 +9,8 @@ import testimonialImg1 from '../Images/aff8.png'; // Replace with your actual im
 import testimonialImg2 from '../Images/aff6.jpg'; // Replace with your actual image path
 import useAnimateOnScroll from './useAnimateOnScroll';
 import 'animate.css'
+import { Navigate, useNavigate } from 'react-router-dom';
+import AffiliatePageChildA from './AffiliatePageChildA';
 
 const PageContainer = styled.div`
   font-family: 'Segoe UI', sans-serif;
@@ -117,6 +119,7 @@ const CTAButton = styled.a`
   text-decoration: none;
   margin-top: 2rem;
   transition: background 0.3s;
+  cursor:pointer;
 
   &:hover {
     background: #1e2a91;
@@ -164,6 +167,7 @@ const c = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const d = useAnimateOnScroll('animate__fadeInUp animate__slower');
 const e = useAnimateOnScroll('animate__fadeInDown animate__slower');
 
+const navigate = useNavigate();
 
 
   return (
@@ -174,7 +178,7 @@ const e = useAnimateOnScroll('animate__fadeInDown animate__slower');
           <HeroSubtitle ref={heroSubtitleAnim.ref} className={heroSubtitleAnim.className}>Join our Affiliate Program and start earning commissions by referring others to our hosting services.</HeroSubtitle>
         </HeroContent>
       </HeroSection>
-
+<AffiliatePageChildA/>
       <Section>
         <SectionTitle>How It Works</SectionTitle>
         <SectionSubtitle>It's simple to start earning with our affiliate program. Here's how:</SectionSubtitle>
@@ -195,7 +199,7 @@ const e = useAnimateOnScroll('animate__fadeInDown animate__slower');
             <FeatureDescription>Receive commissions for every successful referral that signs up through your link.</FeatureDescription>
           </FeatureCard>
         </FeaturesGrid>
-        <CTAButton href="/signup">Join Now</CTAButton>
+        <CTAButton onClick={()=>navigate('/signup')}>Join Now</CTAButton>
       </Section>
 
       <Section bg="#ffffff">

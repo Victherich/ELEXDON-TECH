@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /
+
+# Exclude WHMCS admin and portal from React routing
+RewriteCond %{REQUEST_URI} ^/portal/ [NC]
+RewriteRule ^ - [L]
+
+# React routing support
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]

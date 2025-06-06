@@ -510,6 +510,7 @@ import car12 from "../Images/ELogo.png";
 import car13 from "../Images/herobg4.jpg";
 import car14 from "../Images/herobg5.jpg";
 import car15 from "../Images/herobg5.jpg";
+import { NavLink } from 'react-router-dom';
 
 // Optional fallback fade-in if you want to use styled-components animation somewhere
 const fadeIn = keyframes`
@@ -735,9 +736,9 @@ const AboutComponent = () => {
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
         <p>Learn More About</p>
-        <a href='/aboutus'>
+        <NavLink to='/aboutus'>
           <img src={logo} alt='logo' style={{ width: "150px", cursor: "pointer" }} />
-        </a>
+        </NavLink>
       </div>
     </Container>
   );

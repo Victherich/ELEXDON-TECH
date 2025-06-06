@@ -65,7 +65,8 @@ const Partners2 = () => {
 
       <div className="partners-section2">
       
-      <h2 className="partners-title">OUR PARTNERS</h2>
+      <h2 className="partners-title">OUR SPONSORS/PARTNERS</h2>
+      <h2 className="partners-title2" style={{fontSize:"1.5rem", color:"rgba(0,0,255,0.7)"}}>Our Business & Technology Partners</h2>
       <div className="partners-slider">
         <div className="partners-track2">
           {partners.concat(partners).map((partner, index) => (

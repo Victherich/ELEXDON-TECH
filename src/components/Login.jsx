@@ -92,6 +92,7 @@ const LinkText = styled.p`
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
+  cursor:pointer;
 
   a {
     color: #2B32B2;
@@ -168,7 +169,9 @@ const handleLogin = async () => {
         <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
         <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <Button onClick={handleLogin}>Login</Button>
-        <LinkText><a href="/forgot-password">Forgot Password?</a></LinkText>
+        <LinkText><a onClick={()=>navigate('/signup')}>Don't have an accocunt? Register.</a></LinkText>
+        <LinkText><a onClick={()=>navigate('/forgot-password')}>Forgot Password?</a></LinkText>
+      
       </AuthCard>
     </AuthContainer>
   );

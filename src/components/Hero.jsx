@@ -388,6 +388,7 @@ import herobg1 from '../Images/herobg1.jpg';
 import herobg2 from '../Images/herobg2.jpg';
 import herobg3 from '../Images/herobg3.jpg';
 import herobg4 from '../Images/herobg4.jpg';
+import { useNavigate } from 'react-router-dom';
 
 // Background scroll stars effect
 const scrollStars = keyframes`
@@ -481,6 +482,7 @@ const CTAButton = styled.a`
   text-decoration: none;
   transition: all 0.3s ease;
   animation: ${pulseGlow} 10s ease-in-out infinite;
+  cursor:pointer;
 
   &:hover {
     background: #b983ff;
@@ -491,6 +493,9 @@ const CTAButton = styled.a`
 const useAnimateOnScroll = (animationClass) => {
   const ref = useRef(null);
   const [isVisible, setVisible] = useState(false);
+ 
+
+ 
 
   useEffect(() => {
     const el = ref.current;
@@ -521,6 +526,7 @@ const useAnimateOnScroll = (animationClass) => {
 const Hero = () => {
   const backgrounds = [herobg1, herobg2, herobg3, herobg4];
   const [bgIndex, setBgIndex] = useState(0);
+   const navigate = useNavigate();
 
   const titleAnim = useAnimateOnScroll('animate__fadeInDown animate__slower');
   const subtitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
@@ -550,8 +556,8 @@ const Hero = () => {
           Hosting that glows. Power that moves. Infrastructure that dares to dream. ✨🌐
         </Subtitle>
         <ButtonGroup ref={buttonAnim.ref} className={buttonAnim.className}>
-          <CTAButton href="/domainspage">🚀 Get Started</CTAButton>
-          <CTAButton href="/aboutus">📘 Learn More</CTAButton>
+          <CTAButton onClick={()=>navigate('/domainspage')}>🚀 Get Started</CTAButton>
+          <CTAButton onClick={()=>navigate('/aboutus')}>📘 Learn More</CTAButton>
         </ButtonGroup>
       </Content>
     </HeroSection>
