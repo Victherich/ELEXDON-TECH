@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -89,8 +91,147 @@ const LoaderWrapper = styled.div`
   height: 160px;
 `;
 
-const ServiceCard = ({ service }) => (
-  <Card>
+const ButtonWrap = styled.div`
+
+
+`
+
+
+const Button = styled.button`
+padding:5px;
+border:none;
+border-radius:5px;
+background:#2c5282;
+color:white;
+cursor:pointer;
+
+
+&:hover{
+background:purple;
+}
+
+`
+
+
+const ServiceCard = ({ service }) => {
+const navigate = useNavigate();
+const user = JSON.parse(localStorage.getItem('user'));
+
+
+
+
+// async function renewHosting(clientId, serviceId, paymentmethod = 'banktransfer') {
+//   if (!clientId || !serviceId) {
+//     return Swal.fire('Error', 'Missing client or service ID', 'error');
+//   }
+
+//   const { isConfirmed } = await Swal.fire({
+//     title: 'Renew Hosting?',
+//     text: `Renew hosting service #${serviceId}?`,
+//     icon: 'question',
+//     showCancelButton: true,
+//     confirmButtonText: 'Renew Now'
+//   });
+//   if (!isConfirmed) return;
+
+//   Swal.fire({ title: 'Processing...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+//   try {
+//     const resp = await fetch('https://www.elexdonhost.com.ng/api_elexdonhost/renew_hosting.php', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ clientid: clientId, serviceid: serviceId, paymentmethod })
+//     });
+//     const result = await resp.json();
+//     if (resp.ok && result.success) {
+//       Swal.fire('Success', 'Redirecting to invoice...', 'success');
+//       navigate(`/invoice/${result.invoiceid}`);
+//     } else {
+//       Swal.fire('Error', result.message || 'Renewal failed', 'error');
+//       console.error(result.raw || result);
+//     }
+//   } catch (err) {
+//     Swal.fire('Network Error', err.message, 'error');
+//     console.error(err);
+//   }
+// }
+
+
+
+
+// async function renewHosting2(clientId, serviceId, amount) {
+//   // Validate inputs
+//   const confirmed = await Swal.fire({
+//     title: 'Confirm Renewal',
+//     text: `Invoice ₦${amount} for hosting #${serviceId}?`,
+//     icon: 'question',
+//     showCancelButton: true
+//   });
+//   if (!confirmed.isConfirmed) return;
+
+//   Swal.fire({ title: 'Creating Invoice...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+//   const resp = await fetch('https://www.elexdonhost.com.ng/api_elexdonhost/renew_hosting2.php', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ clientid: clientId, serviceid: serviceId, amount })
+//   });
+//   const result = await resp.json();
+
+//   if (resp.ok && result.success) {
+//     Swal.fire('Success', 'Redirecting to invoice…', 'success');
+//     navigate(`/invoice/${result.invoiceid}`);
+//   } else {
+//     Swal.fire('Error', result.message || 'Failed to create invoice', 'error');
+//     console.error(result);
+//   }
+// }
+
+async function renewHosting2(clientId, serviceId, amount) {
+  const confirmed = await Swal.fire({
+    title: 'Confirm Renewal',
+    text: `Invoice ₦${amount} for hosting #${serviceId}?`,
+    icon: 'question',
+    showCancelButton: true
+  });
+  if (!confirmed.isConfirmed) return;
+
+  Swal.fire({ title: 'Creating Invoice...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+try {
+  const resp = await fetch('https://www.elexdonhost.com.ng/api_elexdonhost/renew_hosting2.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ clientid: clientId, serviceid: serviceId, amount })
+  });
+
+  const text = await resp.text(); // read body ONCE
+  let result;
+
+  try {
+    result = JSON.parse(text); // try to parse as JSON
+  } catch {
+    throw new Error(`Invalid JSON response: ${text}`); // fallback to raw response
+  }
+
+  if (resp.ok && result.success) {
+    Swal.fire('Success', 'Redirecting to invoice…', 'success');
+    navigate(`/invoice/${result.invoiceid}`);
+  } else {
+    throw new Error(result.message || 'Failed to create invoice');
+  }
+
+} catch (err) {
+  console.error(err);
+  Swal.fire('Error', err.message, 'error');
+}
+
+}
+
+
+
+
+
+  return(<Card>
     <Header>
       <ServiceName>{service.name}</ServiceName>
       <Badge>{service.status}</Badge>
@@ -99,10 +240,30 @@ const ServiceCard = ({ service }) => (
       <InfoText><strong>Domain:</strong> {service.domain || '—'}</InfoText>
       <InfoText><strong>Billing Cycle:</strong> {service.billingCycle}</InfoText>
       <InfoText><strong>Next Due:</strong> {service.nextDueDate}</InfoText>
-      {/* <InfoText><strong>Amount:</strong> ₦{service.amount}</InfoText> */}
+
     </div>
-  </Card>
-);
+    <ButtonWrap>
+ <Button onClick={() => window.open(`https://${service.domain}/cpanel`,'_blank')} style={{marginRight:"10px"}}>
+  Go to cPanel
+</Button>
+
+
+
+{/* latest */}
+<Button onClick={() => renewHosting2(user.id, service.id, service.recurringamount )}>
+  Renew Hosting
+</Button>
+
+
+
+
+
+   
+
+
+    </ButtonWrap>
+  </Card>)
+}
 
 const UserActiveServices = () => {
   const [services, setServices] = useState([]);

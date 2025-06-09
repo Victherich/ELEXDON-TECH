@@ -15,6 +15,7 @@ import UserProfile from './UserProfile';
 import UserInvoicesPage from './UserInvoicesPage';
 import UserActiveServices from './UserActiveServices';
 import UserTickets from './UserTickets';
+import UserActiveDomains from './UserActiveDomains';
 
 
 
@@ -200,8 +201,14 @@ const UserDashboard = () => {
          case 'myinvoices':
         return  <UserInvoicesPage/>;
 
+      
+
           case 'useractiveservices':
         return  <UserActiveServices/>;
+
+
+          case 'useractivedomains':
+        return  <UserActiveDomains/>;
 
           case 'tickets':
         return  <UserTickets/>;
@@ -250,6 +257,15 @@ const UserDashboard = () => {
             onClick={() => handleMenuClick('useractiveservices')}
           >
           Active Services
+          </SidebarMenuItem>
+
+
+            <SidebarMenuItem
+          style={{fontSize:"0.9rem"}}
+            active={activeMenu === 'useractivedomains'}
+            onClick={() => handleMenuClick('useractivedomains')}
+          >
+          Active Domains
           </SidebarMenuItem>
 
 

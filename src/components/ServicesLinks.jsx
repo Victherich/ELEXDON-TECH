@@ -3,12 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 // Import icons from react-icons (Font Awesome set used here)
 import {
   FaGlobe, FaExchangeAlt, FaServer, FaStore, FaHdd, FaCloud,
   FaWordpress, FaLock, FaCogs, FaKey
 } from 'react-icons/fa';
+import DomainModal from './DomainModal';
 
 // --- Styled Components ---
 
@@ -154,6 +156,10 @@ const Separator = styled(motion.hr)`
   }
 `;
 
+const Select = styled.select`
+
+`
+
 // Animation variants for framer-motion
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -177,6 +183,47 @@ const itemVariants = {
 // --- React Component ---
 
 const ServicesLinks = () => {
+
+
+ const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+const [modalOpen, setModalOpen] = useState(false);
+
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user?.id) {
+      setError('User not found. Please log in again.');
+      setLoading(false);
+      return;
+    }
+
+    const fetchServices = async () => {
+      try {
+        const res = await fetch(
+          `https://www.elexdonhost.com.ng/api_elexdonhost/get_active_services_by_user.php?id=${user.id}`
+        );
+        const data = await res.json();
+
+        if (data.success) {
+          setServices(data.services);
+          console.log(data)
+        } else {
+          setError(data.message);
+        }
+      } catch (err) {
+        setError('Failed to fetch services.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+
+
   return (
     // <PageContainer>
       <ContentWrapper
@@ -231,11 +278,19 @@ const ServicesLinks = () => {
         <Separator variants={itemVariants} />
 
         <LinkList>
-          <LinkListItem variants={itemVariants}>
-            <Link to="/cpanel-login">
+          <LinkListItem variants={itemVariants} onClick={()=>setModalOpen(true)}>
+            <Link>
               <FaCogs /> Login to cPanel
             </Link>
           </LinkListItem>
+          
+ <DomainModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        services={services}
+      />
+
+        
           <LinkListItem variants={itemVariants}>
             <Link to="/forgot-password">
               <FaKey /> Change Account Password

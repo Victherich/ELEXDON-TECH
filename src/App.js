@@ -40,6 +40,8 @@ import CPanelUnderstandingPage from './components/KnowledgeBaseArticles/CPanelUn
 import EmailSetupTutorial from './components/KnowledgeBaseArticles/EmailSetupTutorial';
 import NameserverConfigurationPage from './components/KnowledgeBaseArticles/NameserverConfiguration';
 import RegistryCodesPage from './components/KnowledgeBaseArticles/RegistryCodes';
+import ResetPasswordPage from './components/ResetPasswordPage';
+import InvoiceRenewal from './components/InvoiceRenewal';
 
 function App() {
   return (
@@ -73,6 +75,7 @@ function App() {
           <Route path='knowledgebase' element={<KnowledgeBasePage/>}/>
           <Route path='/hostingcheckout/:pid' element={<HostingCheckoutForm/>}/>
         <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
+        <Route path='/invoicerenewal/:invoiceId' element={<InvoiceRenewal/>}/>
         <Route path='/dashboard' element={<UserDashboard/>}/>
         <Route path='/domainregistercheckout/:domainname' element={<DomainRegisterCheckout/>}/>
         <Route path='/domaintransfercheckout/:domainname/:eppcode' element={<DomainTransferCheckout/>}/>
@@ -82,7 +85,9 @@ function App() {
         <Route path='/emailsetuptutorial' element={<EmailSetupTutorial/>}/>
         <Route path='/nameserverconfiguration' element={<NameserverConfigurationPage/>}/>
         <Route path='/registrycodes' element={<RegistryCodesPage/>}/>
-        
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+
         </Routes>
         <Hero2/>
         <Footer/>

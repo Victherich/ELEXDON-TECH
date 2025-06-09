@@ -86,7 +86,7 @@ const StatsGrid = styled.div`
   cursor:pointer;
 
   &:hover{
-  background:gray;
+  background:purple;
   }
   }
 `;
@@ -147,6 +147,7 @@ const UserProfile = ({handleMenuClick}) => {
     const [invoices, setInvoices] = useState([]);
       const [services, setServices] = useState([]);
        const [tickets, setTickets] = useState([]);
+       const [domains, setDomains] = useState([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -274,6 +275,43 @@ const UserProfile = ({handleMenuClick}) => {
 
 
 
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user?.id) {
+      setError('User not found. Please log in again.');
+      setLoading(false);
+      return;
+    }
+
+    const fetchDomains = async () => {
+      try {
+        const res = await fetch(
+          `https://www.elexdonhost.com.ng/api_elexdonhost/get_active_domains_by_user.php?id=${user.id}`
+        );
+        const data = await res.json();
+
+        if (data.success) {
+          setDomains(data.domains);
+          // console.log(data)
+        } else {
+          setError(data.message);
+        }
+      } catch (err) {
+        setError('Failed to fetch domains.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDomains();
+  }, []);
+
+
+
+
+
+
    if (loading) return <Loading><Title>User Dashboard</Title>
     <h4>Loading ...</h4></Loading>;
     
@@ -312,6 +350,10 @@ const UserProfile = ({handleMenuClick}) => {
           </button>
           <button onClick={()=>handleMenuClick('useractiveservices')}>
             <h3>Active Services ({services?.length || 0})</h3>
+            <p></p>
+          </button>
+           <button onClick={()=>handleMenuClick('useractivedomains')}>
+            <h3>Active Domains ({domains?.length || 0})</h3>
             <p></p>
           </button>
           <button onClick={()=>handleMenuClick('tickets')}>

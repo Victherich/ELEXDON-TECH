@@ -155,7 +155,7 @@ const D = styled.div`
            }
 `
 
-const InvoicePage = () => {
+const InvoiceRenewal = () => {
     const {invoiceId}=useParams();
   const [invoice, setInvoice] = useState(null);
   const [error, setError] = useState(null);
@@ -204,7 +204,6 @@ const [user, setUser] = useState(null);
 
 
 
-
 const payWithPaystack = (totalAmount) => {
   if (!invoice || !user?.email || !user?.fullname) {
     Swal.fire({ icon: "warning", text: "Missing invoice or user information.", showConfirmButton: true });
@@ -213,8 +212,8 @@ const payWithPaystack = (totalAmount) => {
 
   const paystack = new PaystackPop();
   paystack.newTransaction({
-    // key: "pk_test_60e1f53bba7c80b60029bf611a26a66a9a22d4e4",
-    key: "pk_live_3626fe7772aaca28a10724ebb1f9727dfcc5d6cb", // LIVE KEY
+    key: "pk_test_60e1f53bba7c80b60029bf611a26a66a9a22d4e4",
+    // key: "pk_live_3626fe7772aaca28a10724ebb1f9727dfcc5d6cb", // LIVE KEY
     amount: totalAmount * 100, // in kobo
     email: user.email,
     firstname: user.fullname,
@@ -222,7 +221,7 @@ const payWithPaystack = (totalAmount) => {
     onSuccess: (transaction) => {
       Swal.fire({ icon: "info", title: "Verifying payment...", showConfirmButton: false, allowOutsideClick: false });
 
-      fetch("https://www.elexdonhost.com.ng/api_elexdonhost/verify_and_mark_paid.php", {
+      fetch("https://www.elexdonhost.com.ng/api_elexdonhost/verify_and_mark_paid2.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -374,5 +373,6 @@ const payWithPaystack = (totalAmount) => {
   );
 };
 
-export default InvoicePage;
+export default InvoiceRenewal;
+
 
