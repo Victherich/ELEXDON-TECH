@@ -73,7 +73,7 @@ function App() {
           <Route path='/affiliate' element={<AffiliatePage/>}/>
           <Route path='/announcement' element={<Announcement/>}/>
           <Route path='knowledgebase' element={<KnowledgeBasePage/>}/>
-          <Route path='/hostingcheckout/:pid' element={<HostingCheckoutForm/>}/>
+          <Route path='/hostingcheckout' element={<HostingCheckoutForm/>}/>
         <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
         <Route path='/invoicerenewal/:invoiceId' element={<InvoiceRenewal/>}/>
         <Route path='/dashboard' element={<UserDashboard/>}/>

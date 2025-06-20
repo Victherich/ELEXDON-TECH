@@ -295,11 +295,14 @@ const navigate = useNavigate();
           ))}
         </FeaturesList>
         <CTAButton
-         onClick={() => {
+        onClick={() => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
-    navigate(`/hostingcheckout/${product.pid}`);
+    navigate(`/hostingcheckout`);
+  
   }}
         >ORDER NOW</CTAButton>
+
+     
       </PlanCard>
     );
   })}

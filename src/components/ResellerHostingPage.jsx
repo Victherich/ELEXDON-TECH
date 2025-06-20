@@ -472,9 +472,10 @@ const ResellerHostingPage = () => {
 
 
           <button
-           onClick={() => {
+     onClick={() => {
     localStorage.setItem("selectedProduct", JSON.stringify(plan));
-    navigate(`/hostingcheckout/${plan.pid}`);
+    navigate(`/hostingcheckout`);
+  
   }}
           >
             Order Now

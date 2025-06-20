@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import hostingHeroImg from '../Images/webhostingimg.jpeg'; // Replace with your actual image path
 import Features from './Features';
@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import {Context} from './Context';
 
 // === Styled Components ===
 const HeroSection = styled.section`
@@ -152,8 +153,9 @@ const WebhostingPage = () => {
 
 
 
-   const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+
 
 
 
@@ -285,7 +287,8 @@ const WebhostingPage = () => {
       <button
   onClick={() => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
-    navigate(`/hostingcheckout/${product.pid}`);
+    navigate(`/hostingcheckout`);
+  
   }}
 >
   Order Now

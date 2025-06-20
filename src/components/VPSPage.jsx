@@ -287,9 +287,10 @@ useEffect(() => {
             ))}
         </div>
         <button
-        onClick={() => {
+      onClick={() => {
     localStorage.setItem("selectedProduct", JSON.stringify(plan));
-    navigate(`/hostingcheckout/${plan.pid}`);
+    navigate(`/hostingcheckout`);
+  
   }}
         >Order now</button>
       </PlanCard>

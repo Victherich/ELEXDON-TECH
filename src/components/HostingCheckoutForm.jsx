@@ -1,12 +1,14 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import bg from "../Images/herobg5.jpg";
 import logo from "../Images/logo4.jpeg";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import { Context } from "./Context";
+import PricingModal from "./PricingModal";
 
 const PageWrapper = styled.div`
   background: url(${bg}) no-repeat center center/cover;
@@ -146,10 +148,34 @@ const TldSelect = styled.select`
 
 export default function HostingCheckoutPage() {
 
-    const {pid} = useParams();
+ const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("selectedProduct");
+    if (stored) {
+      try {
+        const parsedProduct = JSON.parse(stored);
+        setProduct(parsedProduct);
+      } catch (error) {
+        console.error("Error parsing product from localStorage:", error);
+      }
+    }
+  }, []);
+
+  console.log(product)
+
+ 
+
+
+    // const pid = product?.pid;
     const navigate = useNavigate();
     const [confirmEmail, setConfirmEmail] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const {domainPricings }=useContext(Context);
+    const [isOpen, setIsOpen]=useState(false);
+
+  
+
 
 const [form, setForm] = useState({
   firstname: "",
@@ -160,7 +186,7 @@ const [form, setForm] = useState({
   tld: "",
   domaintype: "",
   billingcycle: "",
-  pid: pid,
+  pid: "",
   companyname: "",
   address1: "",
   address2: "",
@@ -172,6 +198,14 @@ const [form, setForm] = useState({
 });
 
 
+console.log(form)
+
+
+ useEffect(() => {
+  if (product?.pid) {
+    setForm((prev) => ({ ...prev, pid: product.pid }));
+  }
+}, [product]);
 
 
 //   const [form, setForm] = useState({
@@ -197,6 +231,13 @@ const [form, setForm] = useState({
   const [domainStatus, setDomainStatus] = useState(null);
   const [checkingDomain, setCheckingDomain] = useState(false);
   const [checkoutType, setCheckoutType]=useState(false);
+
+
+
+
+
+
+
 
   const checkDomainAvailability = async () => {
     if (!form.domain) {
@@ -231,7 +272,7 @@ const [form, setForm] = useState({
       const res = await fetch("https://www.elexdonhost.com.ng/api_elexdonhost/check_domain.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain: fullDomain, type: form.domaintype }),
+        body: JSON.stringify({ domain: fullDomain, type: "register" }),
       });
 
       const data = await res.json();
@@ -376,8 +417,8 @@ const [form, setForm] = useState({
 
 
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+const handleSubmit = async (reference ) => {
+  // e.preventDefault();
   setError(null);
 
   if(form.email!==confirmEmail&&!checkoutType){
@@ -441,11 +482,13 @@ const handleSubmit = async (e) => {
       Swal.fire({
         icon: "success",
         title: "Order Successful",
-        text: "Redirecting...",
+        text: "Completing...",
         timer: 2000,
         showConfirmButton: false,
       });
-      navigate(`/invoice/${data.invoiceId}`);
+      // navigate(`/invoice/${data.invoiceId}`);
+      markInvoiceAsPaid(data.invoiceId,reference );
+
     } else {
       setError(data.message || "Checkout failed.");
       Swal.fire({
@@ -472,9 +515,72 @@ const handleSubmit = async (e) => {
 
 
 
+
+
+const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
+  const endpoint = 'https://www.elexdonhost.com.ng/api_elexdonhost/mark_invoice_paid.php'; // Change this to your actual PHP script path
+
+  const payload = {
+    invoiceid: invoiceId,
+    reference: reference
+  };
+
+  if (amount) {
+    payload.amount = amount;
+  }
+
+  // Show loading
+  Swal.fire({
+    title: 'Processing...',
+    text: 'Marking invoice as paid, please wait...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: result.message || 'Invoice marked as paid'
+      });
+      setIsOpen(false);
+      navigate('/login')
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: result.message || 'Could not mark invoice as paid'
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'An unexpected error occurred'
+    });
+  }
+};
+
+
+
+
   return (
     <PageWrapper>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer >
         <Logo src={logo} alt="Elexdon Host Logo" />
         <Title>Complete Your Hosting Order</Title>
 
@@ -761,11 +867,15 @@ const handleSubmit = async (e) => {
 
   <Select name="tld" value={form.tld} onChange={handleChange} required>
     <option>-- Select TLD --</option>
-    <option value=".com">.com</option>
+    {domainPricings.map((d)=>(
+      <option key={d.domain} value={d.domain}>{d.domain}</option>
+    ))}
+
+
+    {/* <option value=".com">.com</option>
     <option value=".net">.net</option>
     <option value=".org">.org</option>
-    {/* <option value=".co">.co</option> */}
-    {/* <option value=".io">.io</option> */}
+
     <option value=".info">.info</option>
     <option value=".biz">.biz</option>
       <option value=".com.ng">.com.ng</option>
@@ -775,27 +885,8 @@ const handleSubmit = async (e) => {
     <option value=".eu">.eu</option>
     <option value=".sch.ng">.sch.ng</option>
 <option value=".uk">.uk</option>
-    <option value=".club">.club</option>
-    {/* <option value=".agency">.agency</option> */}
-    {/* <option value=".design">.design</option> */}
-    {/* <option value=".shop">.shop</option> */}
-    {/* <option value=".cloud">.cloud</option> */}
-    {/* <option value=".ca">.ca</option> */}
-    
-    {/* <option value=".de">.de</option> */}
-    {/* <option value=".fr">.fr</option> */}
-    {/* <option value=".au">.au</option> */}
-    {/* <option value=".nl">.nl</option> */}
-    {/* <option value=".ru">.ru</option> */}
-    {/* <option value=".jp">.jp</option> */}
-    {/* <option value=".in">.in</option> */}
-        {/* <option value=".tech">.tech</option> */}
-    {/* <option value=".site">.site</option> */}
-    {/* <option value=".store">.store</option> */}
-    {/* <option value=".app">.app</option> */}
-    {/* <option value=".blog">.blog</option> */}
-    {/* <option value=".dev">.dev</option> */}
-    {/* <option value=".xyz">.xyz</option> */}
+    <option value=".club">.club</option> */}
+
   </Select>
 
   <Button
@@ -806,7 +897,7 @@ const handleSubmit = async (e) => {
     {checkingDomain ? "Checking..." : "Check Domain"}
   </Button>
 
-  {domainStatus === "available" && (
+  {/* {domainStatus === "available" && (
     <p style={{ color: "green" }}>
       {form.domaintype === "register"
         ? "✅ Domain is available for registration"
@@ -819,21 +910,39 @@ const handleSubmit = async (e) => {
         ? "❌ Domain is not available for registration"
         : "❌ Domain is not registered"}
     </p>
-  )}
-  {domainStatus === "error" && (
+  )} */}
+  {/* {domainStatus === "error" && (
     <p style={{ color: "orangered" }}>⚠️ Error checking domain</p>
-  )}
+  )} */}
 </Grid>
 
 
-        {domainStatus === "available" && (
+        {/* {domainStatus === "available" && (
           <Button type="submit" disabled={loading} style={{marginTop:"20px"}}>
             {loading ? "Processing..." : "Proceed with Order"}
+          </Button>
+        )} */}
+
+         {domainStatus === "available" && (
+          <Button type="button" style={{marginTop:"20px"}} onClick={()=>setIsOpen(true)}>
+            {/* {loading ? "Processing..." : "Proceed with Order"} */}
+            Proceed
           </Button>
         )}
 
         {error && <Error>{error}</Error>}
       </FormContainer>
+      {isOpen&&<PricingModal 
+      isOpen={isOpen} 
+      onClose={()=>setIsOpen(false)} 
+      tld={form.tld} 
+      product={product}
+      domainName={form.domain}
+      domainType={form.domaintype}
+      billingCycle = {form.billingcycle}
+      email = {form.email}
+      handleSubmit={handleSubmit}
+      />}
     </PageWrapper>
   );
 }
