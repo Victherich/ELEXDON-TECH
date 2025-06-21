@@ -290,12 +290,13 @@
 
 
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import 'animate.css';
 import Swal from 'sweetalert2';
 import domainsearchimg from '../Images/domainsearchimg.jpeg';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Context } from './Context';
 
 const useAnimateOnScroll = (animationClass) => {
   const ref = useRef(null);
@@ -435,6 +436,8 @@ const DomainSearch = () => {
   const [result, setResult] = useState(null);
   const navigate = useNavigate();
 
+  const {domainPricings}=useContext(Context);
+
   const titleAnim = useAnimateOnScroll('animate__fadeInDown animate__slower');
   const formAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
   const resultAnim = useAnimateOnScroll('animate__fadeIn animate__slower');
@@ -545,11 +548,14 @@ const DomainSearch = () => {
            
           >
            <option>-- Select TLD --</option>
-    <option value=".com">.com</option>
+
+           {domainPricings.map((d)=>(
+            <option key={d.domain} value={d.domain}>{d.domain}</option>
+           ))}
+    {/* <option value=".com">.com</option>
     <option value=".net">.net</option>
     <option value=".org">.org</option>
-    {/* <option value=".co">.co</option> */}
-    {/* <option value=".io">.io</option> */}
+
     <option value=".info">.info</option>
     <option value=".biz">.biz</option>
       <option value=".com.ng">.com.ng</option>
@@ -559,7 +565,7 @@ const DomainSearch = () => {
     <option value=".eu">.eu</option>
     <option value=".sch.ng">.sch.ng</option>
 <option value=".uk">.uk</option>
-    <option value=".club">.club</option>
+    <option value=".club">.club</option> */}
           </select>
 
           {/* <select
@@ -593,7 +599,7 @@ const DomainSearch = () => {
             available={result.available}
           >
             {result.available ? (
-              <>🎉 <strong>{result.name}</strong> is available! <Button onClick={()=>navigate(`/domainregistercheckout/${result.name}`)}>Register</Button></>
+              <>🎉 <strong>{result.name}</strong> is available! <Button onClick={()=>navigate(`/domainregistercheckout/${result.name}/${domain}/${tld}`)}>Register</Button></>
             ) : (
               <>❌ <strong>{result.name}</strong> is already taken.</>
             )}

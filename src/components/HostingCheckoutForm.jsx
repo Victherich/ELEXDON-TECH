@@ -29,7 +29,7 @@ const PageWrapper = styled.div`
   }
 
   > * {
-    position: relative;
+    // position: relative;
     z-index: 2;
   }
 
@@ -578,9 +578,17 @@ const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
 
 
 
+const handleSubmit1 =(e)=>{
+  e.preventDefault();
+  setIsOpen(true);
+}
+
+
+
+
   return (
     <PageWrapper>
-      <FormContainer >
+      <FormContainer onSubmit={handleSubmit1}>
         <Logo src={logo} alt="Elexdon Host Logo" />
         <Title>Complete Your Hosting Order</Title>
 
@@ -924,7 +932,7 @@ const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
         )} */}
 
          {domainStatus === "available" && (
-          <Button type="button" style={{marginTop:"20px"}} onClick={()=>setIsOpen(true)}>
+          <Button type="submit" style={{marginTop:"20px"}} >
             {/* {loading ? "Processing..." : "Proceed with Order"} */}
             Proceed
           </Button>
@@ -942,6 +950,7 @@ const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
       billingCycle = {form.billingcycle}
       email = {form.email}
       handleSubmit={handleSubmit}
+      checkoutType={checkoutType}
       />}
     </PageWrapper>
   );

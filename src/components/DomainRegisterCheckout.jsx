@@ -632,6 +632,9 @@ import bg from "../Images/herobg5.jpg";
 import logo from "../Images/logo4.jpeg";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import PricingModalForDomain from "./PricingModalForDomain";
+import DomainSearch from "./DomainSearch";
+import PricingModalForDomain2 from "./PricingModalForDomain2";
 
 const PageWrapper = styled.div`
   background: url(${bg}) no-repeat center center/cover;
@@ -650,7 +653,7 @@ const PageWrapper = styled.div`
     z-index: 1;
   }
   > * {
-    position: relative;
+    // position: relative;
     z-index: 2;
   }
 `;
@@ -727,7 +730,7 @@ const Error = styled.p`
 `;
 
 export default function DomainRegisterCheckout() {
-  const { domainname } = useParams();
+  const { domainname , domain , tld} = useParams();
   const navigate = useNavigate();
 
   const [confirmEmail, setConfirmEmail] = useState('');
@@ -735,6 +738,7 @@ export default function DomainRegisterCheckout() {
   const [checkoutType, setCheckoutType] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen]=useState(false)
 
   const [form, setForm] = useState({
     firstname: "",
@@ -759,8 +763,8 @@ export default function DomainRegisterCheckout() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (reference) => {
+
     setError(null);
 
     if (!checkoutType) {
@@ -811,7 +815,10 @@ export default function DomainRegisterCheckout() {
           timer: 2000,
           showConfirmButton: false,
         });
-        navigate(`/invoice/${data.invoiceId}`);
+        // navigate(`/invoice/${data.invoiceId}`);
+        markInvoiceAsPaid(data.invoiceId, reference)
+
+
       } else {
         setError(data.message || "Checkout failed.");
         Swal.fire({
@@ -833,9 +840,82 @@ export default function DomainRegisterCheckout() {
     }
   };
 
+
+
+
+const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
+  const endpoint = 'https://www.elexdonhost.com.ng/api_elexdonhost/mark_invoice_paid.php'; // Change this to your actual PHP script path
+
+  const payload = {
+    invoiceid: invoiceId,
+    reference: reference
+  };
+
+  if (amount) {
+    payload.amount = amount;
+  }
+
+  // Show loading
+  Swal.fire({
+    title: 'Processing...',
+    text: 'Marking invoice as paid, please wait...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: result.message || 'Invoice marked as paid'
+      });
+      setIsOpen(false);
+      navigate('/login')
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: result.message || 'Could not mark invoice as paid'
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'An unexpected error occurred'
+    });
+  }
+};
+
+
+
+
+
+
+
+const handleSubmit1=(e)=>{
+e.preventDefault();
+setIsOpen(true);
+}
+
+
   return (
     <PageWrapper>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleSubmit1}>
         <Logo src={logo} alt="Elexdon Host Logo" />
         <Title>Complete Your Domain Registration</Title>
 <Title>Domain Name: <span style={{color:"purple", textDecoration:"underline"}}>{domainname}</span></Title>
@@ -969,12 +1049,21 @@ export default function DomainRegisterCheckout() {
           )}
         </Grid>
 
-        <Button type="submit" disabled={loading}>
+        {/* <Button type="submit" disabled={loading}>
           {loading ? "Processing..." : "Proceed with Order"}
+        </Button> */}
+
+         <Button type="submit" >
+          Proceed
         </Button>
 
         {error && <Error>{error}</Error>}
+        {/* <PricingModalForDomain/> */}
       </FormContainer>
+
+     {/* {isOpen&& <PricingModalForDomain onClose={()=>setIsOpen(false)}/>} */}
+      {/* <PricingModalForDomain/> */}
+      {isOpen&&<PricingModalForDomain2  onClose={()=>setIsOpen(false)} domain={domain} tld={tld} handleSubmit={handleSubmit} email={form.email} checkoutType={checkoutType}/>}
     </PageWrapper>
   );
 }

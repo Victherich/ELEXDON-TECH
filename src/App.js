@@ -77,8 +77,8 @@ function App() {
         <Route path='/invoice/:invoiceId' element={<InvoicePage/>}/>
         <Route path='/invoicerenewal/:invoiceId' element={<InvoiceRenewal/>}/>
         <Route path='/dashboard' element={<UserDashboard/>}/>
-        <Route path='/domainregistercheckout/:domainname' element={<DomainRegisterCheckout/>}/>
-        <Route path='/domaintransfercheckout/:domainname/:eppcode' element={<DomainTransferCheckout/>}/>
+        <Route path='/domainregistercheckout/:domainname/:domain/:tld' element={<DomainRegisterCheckout/>}/>
+        <Route path='/domaintransfercheckout/:domainname/:eppcode/:domain/:tld' element={<DomainTransferCheckout/>}/>
 
         {/* knowlegdbase articles */}
         <Route path='/cpanelunderstanding' element={<CPanelUnderstandingPage/>}/>

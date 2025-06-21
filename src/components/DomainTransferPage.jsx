@@ -154,7 +154,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import transferHero from '../Images/domaintransferimg.jpg'; // Replace with actual image path
 import useAnimateOnScroll from './useAnimateOnScroll';
@@ -162,6 +162,7 @@ import 'animate.css'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import DomainTransferInstructions from './DomainTransferInstructions';
+import { Context } from './Context';
 
 const Hero = styled.section`
   background-image: url(${transferHero});
@@ -254,6 +255,10 @@ const Section = styled.section`
   max-width: 1100px;
   margin: auto;
   text-align: center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 
   h2 {
     color: #2B32B2;
@@ -263,7 +268,7 @@ const Section = styled.section`
 
 const Input = styled.input`
   padding: 12px;
-  margin: 10px;
+  margin: 0px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 250px;
@@ -312,6 +317,23 @@ const FeatureCard = styled.div`
 `;
 
 
+const Select = styled.select`
+  padding: 5px;
+  // width: 100%;
+  // border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+`;
+
+const Div = styled.div`
+  p{
+    transform:translate(0%, 80%);
+    color:#007bff;
+    font-weight:bold;
+  }
+`
+
+
 const DomainTransferPage = () => {
   const heroTitleAnim = useAnimateOnScroll('animate__fadeInDown animate__slower');
   const heroSubtitleAnim = useAnimateOnScroll('animate__fadeInUp animate__slower');
@@ -322,9 +344,14 @@ const DomainTransferPage = () => {
 
 
   const [domain, setDomain] = useState("");
+  const [tld, setTld]=useState('');
   const [eppCode, setEppCode] = useState("");
   const navigate = useNavigate();
   const domaintype = 'register'
+
+  const {domainPricings} = useContext(Context);
+
+  const fullDomain = domain+tld
 
   // const type = 'register'
 
@@ -410,7 +437,7 @@ const DomainTransferPage = () => {
       const res = await fetch("https://www.elexdonhost.com.ng/api_elexdonhost/check_domain.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain: domain, type: domaintype }),
+        body: JSON.stringify({ domain: fullDomain, type: domaintype }),
       });
 
       const data = await res.json();
@@ -433,7 +460,7 @@ const DomainTransferPage = () => {
             showCancelButton:true,
           }).then((result)=>{
             if(result.isConfirmed){
-              navigate(`/domaintransfercheckout/${domain}/${eppCode}`)
+              navigate(`/domaintransfercheckout/${domain}${tld}/${eppCode}/${domain}/${tld}`)
             }
           })
           
@@ -611,9 +638,33 @@ const DomainTransferPage = () => {
 
         <Section>
           <h2 ref={tldTitleAnim.ref} className={tldTitleAnim.className}>Single Domain Transfer</h2>
-         <Input placeholder="example.com" value={domain} onChange={(e) => setDomain(e.target.value)} />
+<Div>
+
+
+          <p>Enter domain without tld</p>
+         <Input placeholder="eg: elexdonhost" value={domain} onChange={(e) => setDomain(e.target.value)} />
+  </Div>        
+
+<Div>
+          <p>Select tld</p>
+          <Select
+                name="tld"
+                required
+                onChange={(e)=>setTld(e.target.value)}
+                value={tld}
+
+              >
+                <option >-- Select tld --</option>
+                {domainPricings.map((d)=>(
+                  <option key={d.domain} value={d.domain}>{d.domain}</option>
+                ))}
+              </Select>
+</Div>
+
+<Div>
+              <p>Enter Epp code / Auth code</p>
       <Input placeholder="EPP Code / Auth Code" value={eppCode} onChange={(e) => setEppCode(e.target.value)} />
-     
+ </Div>    
           <br />
           <Button onClick={checkDomainAvailability}>Check</Button>
           <p style={{ fontSize: '0.85rem', marginTop: '10px' }}>

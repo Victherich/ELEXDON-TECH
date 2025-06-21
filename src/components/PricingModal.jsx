@@ -102,7 +102,7 @@ const Button = styled.button`
  
 `;
 
-const PricingModal = ({ isOpen, onClose, product, tld, domainName, domainType, billingCycle, email, handleSubmit }) => {
+const PricingModal = ({ isOpen, onClose, product, tld, domainName, domainType, billingCycle, email, handleSubmit, checkoutType }) => {
 
   const { domainPricings }=useContext(Context);
 const domain = domainPricings.find((e)=>e.domain===tld)
@@ -150,6 +150,66 @@ useEffect(()=>{
 
 
 
+const checkUserRegistration =()=>{
+
+// Show loading
+Swal.fire({
+  title: 'Checking user...',
+  allowOutsideClick: false,
+  didOpen: () => {
+    Swal.showLoading();
+  }
+});
+
+fetch('https://www.elexdonhost.com.ng/api_elexdonhost/check_user.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ email: email })
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    // payWithPaystack();
+    if(checkoutType===false){
+ Swal.fire({
+      icon: 'warning',
+      title: 'User Found',
+      text: 'You already have an account. Kindly go back and check the "i have an account box" and then proceed',
+    });
+    }else{
+      payWithPaystack();
+    }
+   
+  } else {
+
+    if(checkoutType===false){
+      payWithPaystack();
+    } else{
+  Swal.fire({
+      icon: 'warning',
+      title: 'You do not have not an account, kindy go back and uncheck the "i have an account box" and then proceed.',
+      text: data.message,
+    });
+    }
+  
+  }
+})
+.catch(error => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: 'An error occurred while checking the user.',
+  });
+});
+
+
+  
+}
+
+
+
 
   const payWithPaystack = () => {
     // if (!invoice || !user?.email || !user?.fullname) {
@@ -159,8 +219,8 @@ useEffect(()=>{
   
     const paystack = new PaystackPop();
     paystack.newTransaction({
-      key: "pk_test_60e1f53bba7c80b60029bf611a26a66a9a22d4e4",
-    //   key: "pk_live_3626fe7772aaca28a10724ebb1f9727dfcc5d6cb", // LIVE KEY
+      // key: "pk_test_60e1f53bba7c80b60029bf611a26a66a9a22d4e4",
+      key: "pk_live_3626fe7772aaca28a10724ebb1f9727dfcc5d6cb", // LIVE KEY
       amount: total * 100, // in kobo
       email: email,
     //   firstname: user.fullname,
@@ -274,7 +334,7 @@ return isOpen
             )}
 
             <Total>Total: ₦{total.toLocaleString()}</Total>
-            <Button onClick={payWithPaystack}>Pay Now</Button>
+            <Button onClick={checkUserRegistration}>Pay Now</Button>
             <Button style={{background:"gray"}} onClick={onClose}>Cancel</Button>
           </ModalContainer>
         </Overlay>

@@ -6,6 +6,7 @@ import bg from "../Images/herobg5.jpg";
 import logo from "../Images/logo4.jpeg";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import PricingModalForDomainTransfer from "./PricingModalForDomainTransfer";
 
 const PageWrapper = styled.div`
   background: url(${bg}) no-repeat center center/cover;
@@ -24,7 +25,7 @@ const PageWrapper = styled.div`
     z-index: 1;
   }
   > * {
-    position: relative;
+    // position: relative;
     z-index: 2;
   }
 `;
@@ -101,7 +102,7 @@ const Error = styled.p`
 `;
 
 export default function DomainTransferCheckout() {
-  const { domainname, eppcode } = useParams();
+  const { domainname, eppcode , domain, tld} = useParams();
   const navigate = useNavigate();
 
   const [confirmEmail, setConfirmEmail] = useState('');
@@ -109,6 +110,7 @@ export default function DomainTransferCheckout() {
   const [checkoutType, setCheckoutType] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
 //   const [form, setForm] = useState({
 //     firstname: "",
@@ -152,8 +154,8 @@ const [form, setForm] = useState({
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (reference) => {
+    // e.preventDefault();
     setError(null);
 
     if (!checkoutType) {
@@ -205,7 +207,8 @@ const [form, setForm] = useState({
           timer: 2000,
           showConfirmButton: false,
         });
-        navigate(`/invoice/${data.invoiceId}`);
+         // navigate(`/invoice/${data.invoiceId}`);
+        markInvoiceAsPaid(data.invoiceId, reference)
       } else {
         setError(data.message || "Checkout failed.");
         Swal.fire({
@@ -227,9 +230,78 @@ const [form, setForm] = useState({
     }
   };
 
+
+
+  const markInvoiceAsPaid = async (invoiceId, reference, amount = null) => {
+    const endpoint = 'https://www.elexdonhost.com.ng/api_elexdonhost/mark_invoice_paid.php'; // Change this to your actual PHP script path
+  
+    const payload = {
+      invoiceid: invoiceId,
+      reference: reference
+    };
+  
+    if (amount) {
+      payload.amount = amount;
+    }
+  
+    // Show loading
+    Swal.fire({
+      title: 'Processing...',
+      text: 'Marking invoice as paid, please wait...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+  
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+  
+      const result = await response.json();
+  
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: result.message || 'Invoice marked as paid'
+        });
+        setIsOpen(false);
+        navigate('/login')
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: result.message || 'Could not mark invoice as paid'
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An unexpected error occurred'
+      });
+    }
+  };
+  
+
+
+const handleSubmit1=(e)=>{
+e.preventDefault();
+setIsOpen(true);
+}
+
+
+
   return (
     <PageWrapper>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleSubmit1}>
         <Logo src={logo} alt="Elexdon Host Logo" />
         <Title>Complete Your Domain Transfer</Title>
         <Title>Domain Name: <span style={{color:"purple", textDecoration:"underline"}}>{domainname}</span></Title>
@@ -365,12 +437,15 @@ const [form, setForm] = useState({
           )}
         </Grid>
 
-        <Button type="submit" disabled={loading}>
-          {loading ? "Processing..." : "Proceed with Order"}
+        <Button type="submit">
+          Proceed
         </Button>
 
         {error && <Error>{error}</Error>}
       </FormContainer>
+
+         {isOpen&&<PricingModalForDomainTransfer  onClose={()=>setIsOpen(false)} domain={domain} tld={tld} handleSubmit={handleSubmit} email={form.email} checkoutType={checkoutType}/>}
+         
     </PageWrapper>
   );
 }
