@@ -42,6 +42,24 @@ import NameserverConfigurationPage from './components/KnowledgeBaseArticles/Name
 import RegistryCodesPage from './components/KnowledgeBaseArticles/RegistryCodes';
 import ResetPasswordPage from './components/ResetPasswordPage';
 import InvoiceRenewal from './components/InvoiceRenewal';
+import Partners from './components/Partners';
+import Partners2 from './components/Partners2';
+import ServicesPage from './components/ServicesPage';
+
+import CourseRegistrationPage from './components/CourseRegistrationPage';
+import WebDevelopmentCourse from './components/Courses/WebDevelopmentCourse';
+import MobileAppDevelopmentCoursePage from './components/Courses/MobileAppDevelopmentCoursePage';
+import ComputerRepairsMaintenancePage from './components/Courses/ComputerRepairsMaintenancePage';
+import DigitalMarketingCoursePage from './components/Courses/DigitalMarketingCoursePage';
+import GeographicInformationSystemPage from './components/Courses/GeographicInformationSystemPage';
+import SoftwareDevelopmentPage from './components/Courses/SoftwareDevelopmentPage';
+import AutoCADArchiCADPage from './components/Courses/AutoCADArchiCADPage';
+import ComputerAnimationPage from './components/Courses/ComputerAnimationPage';
+import MicrosoftCertifiedProfessionalPage from './components/Courses/MicrosoftCertifiedProfessionalPage';
+import ComputerNetworkingPage from './components/Courses/ComputerNetworkingPage';
+import AccountingSoftwarePage from './components/Courses/AccountingSoftwarePage';
+import DesktopPublishingPage from './components/Courses/DesktopPublishingPage';
+import GraphicsDesignPage from './components/Courses/GraphicsDesignPage';
 
 function App() {
   return (
@@ -51,6 +69,7 @@ function App() {
       <Header/>
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
+          <Route path='/home' element={<LandingPage/>}/>
           <Route path ='/domainspage' element={<DomainsPage/>}/>
           <Route path='/sharedhosting' element={<Sharedhostingpage/>}/>
           <Route path='/dedicatedhosting' element={<DedicatedHostingPage/>}/>
@@ -88,8 +107,28 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
 
 
+        {/*  */}
+
+        <Route path='/services' element={<ServicesPage/>}/>
+        <Route path='/courses/web-design-development' element={<WebDevelopmentCourse/>}/>
+        <Route path='/courseregistration' element={<CourseRegistrationPage/>}/>
+        <Route path='/courses/mobile-app-development' element={<MobileAppDevelopmentCoursePage/>}/>
+        <Route path='/courses/computer-repair-maintenance' element={<ComputerRepairsMaintenancePage/>}/>
+        <Route path='/courses/digital-marketing' element={<DigitalMarketingCoursePage/>}/>
+        <Route path='/courses/geographic-information-system-gis' element={<GeographicInformationSystemPage/>}/>
+        <Route path='/courses/software-development' element={<SoftwareDevelopmentPage/>}/>
+        <Route path='/courses/autocad-2d-3d' element={<AutoCADArchiCADPage/>}/>
+        <Route path='/courses/computer-animation' element={<ComputerAnimationPage/>}/>
+        <Route path='/courses/microsoft-certified-it-professional' element={<MicrosoftCertifiedProfessionalPage/>}/>
+        <Route path='/courses/computer-networking' element={<ComputerNetworkingPage/>}/>
+        <Route path='/courses/accounting-software' element={<AccountingSoftwarePage/>}/>
+        <Route path='/courses/desktop-publishing' element={<DesktopPublishingPage/>}/>
+        <Route path='/courses/graphics-design' element={<GraphicsDesignPage/>}/>
+
+
         </Routes>
-        <Hero2/>
+        {/* <Hero2/> */}
+        <Partners2/>
         <Footer/>
        
         

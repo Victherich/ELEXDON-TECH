@@ -30,8 +30,25 @@ const yes ="true"
 ];
 
 
+const courses = [
+  { name: "Web Design & Development", path: "/courses/web-design-development" },
+  { name: "Mobile App Development", path: "/courses/mobile-app-development" },
+  { name: "Computer Repair and Maintenance", path: "/courses/computer-repair-maintenance" },
+  { name: "Digital Marketing", path: "/courses/digital-marketing" },
+  { name: "Geographic Information System (GIS)", path: "/courses/geographic-information-system-gis" },
+  { name: "Software Development", path: "/courses/software-development" },
+  { name: "AutoCAD 2D & 3D", path: "/courses/autocad-2d-3d" },
+  { name: "Computer Animation", path: "/courses/computer-animation" },
+  { name: "Become a Microsoft Certified IT Professional", path: "/courses/microsoft-certified-it-professional" },
+  { name: "Computer Networking", path: "/courses/computer-networking" },
+  { name: "Accounting Software", path: "/courses/accounting-software" },
+  { name: "Desktop Publishing", path: "/courses/desktop-publishing" },
+  { name: "Graphics Design", path: "/courses/graphics-design" }
+];
+
+
   return (
-    <Context.Provider value={{yes,domainPricings}}>
+    <Context.Provider value={{yes,domainPricings, courses}}>
       {children}
     </Context.Provider>
   )

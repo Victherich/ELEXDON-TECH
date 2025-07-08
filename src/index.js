@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ContextProvider from './components/Context';
 import { unregister } from './serviceWorker';
+import 'react-icons/fa';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
