@@ -944,9 +944,11 @@ const ContactUs = () => {
 
           <ContactInfoCard>
             <h3><FaLocationArrow /> Our Contact Info</h3>
-            <p><FaMapMarkerAlt className="icon" /> Suite 13 Lakobs Plaza Enoma Bustop Ago Palace Way, Okota, Lagos.</p>
+            <p><FaMapMarkerAlt className="icon" /> Elexdon Digital Technologies Limited. Plot SP 795 First-Gate Mechanic Estate, Apo Fct-Abuja.</p>
+            <p><FaMapMarkerAlt className="icon" /> The Old Vicarage building, Trinity Road Old Market Avon, Bristol – United Kingdom.</p>
+            
             <p><FaPhone className="icon" /> +234 901 560 5175</p>
-            <p><FaPhone className="icon" /> +234 818 560 9702</p>
+            <p><FaPhone className="icon" /> +44(0)7479305003</p>
             <p><FaEnvelope className="icon" /> <a href="mailto:info@elexdontech.com">info@elexdontech.com</a></p>
           </ContactInfoCard>
         </ContactGrid>

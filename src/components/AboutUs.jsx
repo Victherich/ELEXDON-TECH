@@ -11,6 +11,14 @@ import {
   FaAward,           // For Excellence
   FaCheckCircle      // General purpose icon if needed
 } from 'react-icons/fa';
+import CoreValuesComponent from './landingPage2/CoreValues';
+import CoreValuesIntegrity from './landingPage2/CoreValuesIntegrity';
+import CoreValuesPartnership from './landingPage2/CoreValuesPartnership';
+import CoreValuesProfessionalism from './landingPage2/CoreValuesProfessionalism';
+import CoreValuesQuality from './landingPage2/CoreValuesQuality';
+import InfoCards from './landingPage2/InfoCards';
+import WhoWeAre from './WhoWeAre';
+import TeamSection from './OurTeams';
 
 // --- Keyframe Animations (Only those used for non-icon elements) ---
 
@@ -88,7 +96,8 @@ const HeroSubtitle = styled.p`
 `;
 
 const SectionWrapper = styled.section`
-  background: linear-gradient(180deg, #F0F4F8 0%, #FFFFFF 100%);
+  // background: linear-gradient(180deg, #F0F4F8 0%, #FFFFFF 100%);
+   background: rgba(107, 132, 162, 0.2);
   color: #2C3E50;
   padding: 80px 20px;
   text-align: center;
@@ -208,21 +217,29 @@ const CoreContent = styled.div`
 
 const AboutUs = () => {
   return (
-    <>
-      <HeroSection>
+    <div style={{background:"rgba(107, 132, 162, 0.2)"}}>
+      {/* <HeroSection>
         <HeroContent>
           <HeroTitle>About Us</HeroTitle>
           <HeroSubtitle>
             Elexdon: A world-class integrated web solution provision company with a track record of success in tech services. We develop and offer a flexible range of solutions development and services.
           </HeroSubtitle>
         </HeroContent>
-      </HeroSection>
+      </HeroSection> */}
+    <WhoWeAre/>
+      <InfoCards/>
+      <CoreValuesComponent/>
+      <CoreValuesIntegrity/>
+      <CoreValuesPartnership/>
+      <CoreValuesProfessionalism/>
+      <CoreValuesQuality/>
+      <TeamSection/>
 
-      <SectionWrapper>
+      {/* <SectionWrapper>
         <h2 style={{ animationDelay: '0.8s' }}>Our Story & Purpose</h2>
 
         <CoreSection delay="1s">
-          <CoreIconWrapper> {/* Removed delay prop as it's not needed without animation */}
+          <CoreIconWrapper> 
             <FaBullseye />
           </CoreIconWrapper>
           <CoreContent>
@@ -234,7 +251,7 @@ const AboutUs = () => {
         </CoreSection>
 
         <CoreSection $reverse delay="1.4s">
-          <CoreIconWrapper> {/* Removed delay prop */}
+          <CoreIconWrapper> 
             <FaLightbulb />
           </CoreIconWrapper>
           <CoreContent>
@@ -246,7 +263,7 @@ const AboutUs = () => {
         </CoreSection>
 
         <CoreSection delay="1.8s">
-          <CoreIconWrapper> {/* Removed delay prop */}
+          <CoreIconWrapper>
             <FaEye />
           </CoreIconWrapper>
           <CoreContent>
@@ -260,7 +277,7 @@ const AboutUs = () => {
         <h2 style={{ marginTop: '80px', animationDelay: '2.2s' }}>Our Core Values</h2>
         <CoreValuesGrid>
           <ValueCard delay="2.4s">
-            <ValueIconContainer> {/* Removed delay prop */}
+            <ValueIconContainer>
               <FaHeart />
             </ValueIconContainer>
             <ValueTitle>We Are Caring</ValueTitle>
@@ -270,7 +287,7 @@ const AboutUs = () => {
           </ValueCard>
 
           <ValueCard delay="2.7s">
-            <ValueIconContainer> {/* Removed delay prop */}
+            <ValueIconContainer> 
               <FaLightbulb />
             </ValueIconContainer>
             <ValueTitle>Innovation</ValueTitle>
@@ -280,7 +297,7 @@ const AboutUs = () => {
           </ValueCard>
 
           <ValueCard delay="3s">
-            <ValueIconContainer> {/* Removed delay prop */}
+            <ValueIconContainer>
               <FaAward />
             </ValueIconContainer>
             <ValueTitle>Excellence</ValueTitle>
@@ -289,8 +306,8 @@ const AboutUs = () => {
             </ValueDescription>
           </ValueCard>
         </CoreValuesGrid>
-      </SectionWrapper>
-    </>
+      </SectionWrapper> */}
+    </div>
   );
 };
 

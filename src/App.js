@@ -60,13 +60,16 @@ import ComputerNetworkingPage from './components/Courses/ComputerNetworkingPage'
 import AccountingSoftwarePage from './components/Courses/AccountingSoftwarePage';
 import DesktopPublishingPage from './components/Courses/DesktopPublishingPage';
 import GraphicsDesignPage from './components/Courses/GraphicsDesignPage';
+import Header2 from './components/landingPage2/Header2';
+import CoWorkingSpace from './components/CoWorkingSpace';
 
 function App() {
   return (
     <BrowserRouter>
     <AppUpdate/>
     <ScrollToTop/>
-      <Header/>
+    <Header2/>
+      
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
           <Route path='/home' element={<LandingPage/>}/>
@@ -74,6 +77,7 @@ function App() {
           <Route path='/sharedhosting' element={<Sharedhostingpage/>}/>
           <Route path='/dedicatedhosting' element={<DedicatedHostingPage/>}/>
           <Route path='/aboutus' element={<AboutPage/>}/>
+          <Route path='/coworkingspace' element={<CoWorkingSpace/>}/>
           <Route path='/contactus' element={<ContactUs/>}/>
           <Route path ='/blogs' element={<BlogPage/>}/>
           <Route path='/termsandconditions' element={<TermsPage/>}/>
@@ -128,7 +132,7 @@ function App() {
 
         </Routes>
         {/* <Hero2/> */}
-        <Partners2/>
+        {/* <Partners2/> */}
         <Footer/>
        
         

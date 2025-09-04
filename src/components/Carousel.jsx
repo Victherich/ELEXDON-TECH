@@ -63,23 +63,24 @@ const dotPulse = keyframes`
 const CarouselContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 80vh; /* Adjust height as needed */
+  height: 100vh; /* Adjust height as needed */
   overflow: hidden;
-  border-radius: 20px; /* Soft rounded corners for the carousel itself */
+  border-radius: 0px; /* Soft rounded corners for the carousel itself */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   margin: 50px auto; /* Center the carousel on the page */
   max-width: 1400px; /* Max width for larger screens */
   
 
   @media (max-width: 768px) {
-    height: 60vh;
+    // height: 60vh;
     margin: 30px auto;
     border-radius: 10px;
   }
   @media (max-width: 480px) {
-    height: 50vh;
+    // height: 50vh;
     margin: 20px auto;
     border-radius: 5px;
+    padding-top:100px;
   }
 `;
 
@@ -91,7 +92,7 @@ const Slide = styled.div`
   height: 100%;
   background-image: url(${props => props.$bgImage});
   background-size: cover;
-  background-position: center;
+  background-position: top;
   opacity: ${props => (props.$active ? 1 : 0)};
   transition: opacity 1s ease-in-out; /* Smooth fade transition for background */
   display: flex;
@@ -136,8 +137,9 @@ const SlideTitle = styled.h2`
   font-size: clamp(2.2rem, 4.5vw, 3.5rem);
   font-weight: 800;
   margin-bottom: 15px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
   color: #00C9FF; /* Vibrant blue for titles */
+  color:white;
 `;
 
 const SlideDescription = styled.p`

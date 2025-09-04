@@ -356,6 +356,14 @@
 
 // export default Footer;
 
+
+
+
+
+
+
+
+// 2nd code
 import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'; // Added more icons
@@ -400,9 +408,11 @@ const float = keyframes`
 
 const FooterWrapper = styled.footer`
   position: relative;
-  background: #0D1B2A; /* Deep dark blue for a premium, tech feel */
-  color: #E0E0E0; /* Soft white for general text */
-  padding-top: 30px; /* Space for the top wave/curve */
+  // background: #0D1B2A; /* Deep dark blue for a premium, tech feel */
+   background: #34404eff;
+  // color: #E0E0E0; /* Soft white for general text */
+  color:white;
+  // padding-top: 10px; /* Space for the top wave/curve */
   overflow: hidden; /* Ensure nothing spills out */
 `;
 
@@ -447,7 +457,7 @@ const TopGradientBorder = styled.div`
 const FooterContent = styled.div`
   max-width: 1400px; /* Wider content area */
   margin: 0 auto;
-  padding: 60px 40px; /* More generous padding */
+  padding: 30px 40px; /* More generous padding */
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr; /* Adjusted columns for new layout */
   gap: 60px; /* Increased gap */
@@ -486,9 +496,9 @@ const Section = styled.div`
 
 const LogoSection = styled(Section)`
   .footer-logo {
-    width: 100px; /* Larger, more prominent logo */
+    width: 60px; /* Larger, more prominent logo */
     border-radius: 8px;
-    margin-bottom: 20px;
+    // margin-bottom: 5px;
     box-shadow: 0 0 20px rgba(0, 201, 255, 0.3); /* Subtle glow */
     transition: transform 0.3s ease-in-out;
     &:hover {
@@ -497,10 +507,10 @@ const LogoSection = styled(Section)`
   }
 
   p {
-    color: #B0B0B0; /* Lighter grey for descriptive text */
+    color: whitesmoke; /* Lighter grey for descriptive text */
     line-height: 1.6;
     margin-bottom: 10px;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
   }
 
   strong {
@@ -511,7 +521,7 @@ const LogoSection = styled(Section)`
 
 const SectionTitle = styled.h4`
   margin-bottom: 25px;
-  font-size: 1.3rem; /* Slightly larger titles */
+  font-size: 1.1rem; /* Slightly larger titles */
   color: #00C9FF; /* Vibrant blue for section titles */
   font-weight: 700;
   text-transform: uppercase;
@@ -542,8 +552,8 @@ const SectionTitle = styled.h4`
 
 const FooterLink = styled.a`
   display: block;
-  color: #B0B0B0; /* Lighter grey for links */
-  margin: 10px 0; /* More vertical spacing */
+  color: whitesmoke; /* Lighter grey for links */
+  margin: 2px 0; /* More vertical spacing */
   text-decoration: none;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
@@ -580,8 +590,8 @@ const ContactInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  color: #B0B0B0;
-  font-size: 0.95rem; /* Make contact info text slightly smaller */
+  color: whitesmoke;
+  font-size: 0.8rem; /* Make contact info text slightly smaller */
 
   svg {
     margin-right: 10px;
@@ -628,7 +638,7 @@ const Newsletter = styled.div`
     box-sizing:border-box;
     outline: none;
     background: #0F2027; /* Darker input background */
-    color: #E0E0E0;
+    color: whitesmoke;
     margin-bottom: 15px;
     font-size: 1rem;
     transition: all 0.3s ease-in-out;
@@ -726,11 +736,11 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <TopGradientBorder />
-      <WaveTop>
+      {/* <WaveTop>
         <svg viewBox="0 0 500 150" preserveAspectRatio="none">
           <path d="M0,0 C150,100 350,0 500,100 L500,0 L0,0 Z"></path>
         </svg>
-      </WaveTop>
+      </WaveTop> */}
 
       <FooterContent>
         {/* Company Info Section */}
@@ -739,7 +749,7 @@ const Footer = () => {
           <p>Elexdon is a world-class integrated web solution provision company with a track record of success in tech services. We develop and offer a flexible range of solutions development and services.</p>
           
           <ContactInfo>
-            <FaEnvelope /> Email: <a href="mailto:info@elexdontech.com">info@elexdontech.com</a>
+            <FaEnvelope /> Email: <a href="mailto:info@elexdontech.com"> info@elexdontech.com</a>
           </ContactInfo>
           <ContactInfo>
             <FaPhoneAlt /> Phone (UK): +44(0)7479305003
@@ -751,7 +761,8 @@ const Footer = () => {
             <FaPhoneAlt /> Phone (NG): +2349015605175
           </ContactInfo>
           <ContactInfo>
-            <FaMapMarkerAlt /> Address (NG): Lakobs Plaza, Ago Palace Way, Okota-Isolo, Lagos – Nigeria.
+            <FaMapMarkerAlt /> Address (NG): Elexdon Digital Technologies Limited.
+Plot SP 795 First-Gate Mechanic Estate, Apo Fct-Abuja.
           </ContactInfo>
           
           <SocialIcons>
@@ -768,27 +779,30 @@ const Footer = () => {
           <FooterLink onClick={() => navigate('/')}>Home</FooterLink>
           <FooterLink onClick={() => navigate('/aboutus')}>About Us</FooterLink>
           <FooterLink onClick={() => navigate('/services')}>Services</FooterLink> {/* Assuming a services page */}
-          <FooterLink onClick={() => navigate('/termsandconditions')}>Terms of Service</FooterLink>
-          <FooterLink onClick={() => navigate('/privacypolicy')}>Privacy Policy</FooterLink>
+      
           <FooterLink onClick={() => navigate('/contactus')}>Contact us</FooterLink>
         </Section>
 
         {/* Our Courses Section */}
         <Section>
-          <SectionTitle>Our Courses</SectionTitle>
-          <p style={{color: "#B0B0B0", lineHeight: "1.6", fontSize: "0.95rem", marginBottom: "15px"}}>
+          <SectionTitle>Our Subsidiaries</SectionTitle>
+          {/* <p style={{color: "#B0B0B0", lineHeight: "1.6", fontSize: "0.95rem", marginBottom: "15px"}}>
             All course content is accredited by International bodies and has been independently assessed to ensure a consistent and high-quality training service. Just check out our academy page for more information.
-          </p>
-            <FooterLink onClick={() => navigate('/courseregistration')}>Register Course</FooterLink> {/* Assuming an academy page */}
-       
+          </p> */}
+            {/* <FooterLink onClick={() => navigate('/courseregistration')}>Register Course</FooterLink> Assuming an academy page */}
+        <FooterLink onClick={() => window.open('https://elexdonhost.com', '_blank')}>Elexdon Host</FooterLink>
+         
           <FooterLink onClick={() => window.open('https://www.elexdondigitalacademy.com', '_blank')}>Elexdon Digital Academy</FooterLink> {/* Assuming an academy page */}
+         <FooterLink onClick={() => window.open('https://mikeconnect.com', '_blank')}>Mike Connect</FooterLink>
+          <FooterLink href='/coworkingspace'>Co-Working Space</FooterLink>
+         
         </Section>
         
         {/* Hosting Services (from old content, adjusted) */}
         <Section>
-          <SectionTitle>Hosting & Domains</SectionTitle>
-          <FooterLink onClick={() => window.open('https://elexdonhost.com.ng', '_blank')}>Elexdon Host</FooterLink>
-         </Section>
+          <SectionTitle>Legal</SectionTitle>
+             <FooterLink onClick={() => navigate('/termsandconditions')}>Terms of Service</FooterLink>
+          <FooterLink onClick={() => navigate('/privacypolicy')}>Privacy Policy</FooterLink></Section>
 
 
         {/* Newsletter / Contact (adjusted for new content structure) */}
@@ -818,3 +832,278 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
+
+
+
+
+
+
+
+// // 3rd code
+// import React from 'react';
+// import styled from 'styled-components';
+// import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+// import logo from '../Images/ELogo.png'; // Using the logo from the provided code, assuming it's an Elexdon logo.
+// import certBadge from '../Images/ELogo.png'; // Placeholder for the certification badges. Please replace with your actual images.
+
+// const FooterWrapper = styled.footer`
+//   background-color: #1a361c;
+//   color: #d1d1d1;
+//   font-family: Arial, sans-serif;
+//   padding: 50px 120px;
+
+//   @media (max-width: 1024px) {
+//     padding: 50px 40px;
+//   }
+
+//   @media (max-width: 768px) {
+//     padding: 30px 20px;
+//   }
+// `;
+
+// const FooterGrid = styled.div`
+//   display: grid;
+//   grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+//   gap: 40px;
+//   max-width: 1200px;
+//   margin: 0 auto;
+
+//   @media (max-width: 1024px) {
+//     grid-template-columns: 1fr 1fr;
+//     gap: 30px;
+//   }
+
+//   @media (max-width: 768px) {
+//     grid-template-columns: 1fr;
+//     text-align: center;
+//   }
+// `;
+
+// const Section = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+  
+//   @media (max-width: 768px) {
+//     align-items: center;
+//   }
+// `;
+
+// const Logo = styled.img`
+//   width: 150px;
+//   margin-bottom: 20px;
+// `;
+
+// const LocationList = styled.ul`
+//   list-style-type: none;
+//   padding: 0;
+//   margin: 0 0 20px 0;
+//   display: flex;
+//   gap: 20px;
+
+//   @media (max-width: 768px) {
+//     justify-content: center;
+//   }
+// `;
+
+// const Location = styled.li`
+//   color: #b8de6f;
+//   font-weight: bold;
+//   position: relative;
+  
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     bottom: -5px;
+//     left: 0;
+//     width: 100%;
+//     height: 2px;
+//     background-color: #b8de6f;
+//   }
+// `;
+
+// const ContactInfo = styled.div`
+//   margin-bottom: 20px;
+  
+//   p {
+//     margin: 5px 0;
+//     line-height: 1.6;
+//   }
+
+//   span {
+//     display: block;
+//     border-bottom: 1px solid #b8de6f;
+//     padding-bottom: 5px;
+//     margin-bottom: 10px;
+//     color: #b8de6f;
+//     font-weight: bold;
+//     font-size: 14px;
+    
+//     @media (max-width: 768px) {
+//       display: inline-block;
+//     }
+//   }
+
+//   a {
+//     color: #b8de6f;
+//     text-decoration: none;
+//     &:hover {
+//       text-decoration: underline;
+//     }
+//   }
+// `;
+
+// const SectionTitle = styled.h4`
+//   font-size: 16px;
+//   font-weight: bold;
+//   margin: 0 0 15px 0;
+//   text-transform: uppercase;
+//   color: #fff;
+
+//   @media (max-width: 768px) {
+//     margin-top: 20px;
+//   }
+// `;
+
+// const LinksList = styled.ul`
+//   list-style-type: none;
+//   padding: 0;
+//   margin: 0;
+  
+//   li {
+//     margin-bottom: 10px;
+//   }
+  
+//   a {
+//     color: #d1d1d1;
+//     text-decoration: none;
+//     transition: color 0.3s ease;
+    
+//     &:hover {
+//       color: #b8de6f;
+//     }
+//   }
+// `;
+
+// const CertificationsSection = styled(Section)`
+//   @media (max-width: 768px) {
+//     align-items: center;
+//   }
+// `;
+
+// const CertTitle = styled.h4`
+//   color: #b8de6f;
+//   font-size: 14px;
+//   text-transform: uppercase;
+//   margin: 0 0 15px 0;
+//   line-height: 1.4;
+//   text-align: left;
+  
+//   @media (max-width: 768px) {
+//     text-align: center;
+//   }
+// `;
+
+// const CertificationBadges = styled.div`
+//   display: flex;
+//   gap: 15px;
+//   margin-bottom: 30px;
+  
+//   @media (max-width: 768px) {
+//     justify-content: center;
+//   }
+// `;
+
+// const CertBadge = styled.img`
+//   width: 50px;
+// `;
+
+// const SocialIcons = styled.div`
+//   display: flex;
+//   gap: 15px;
+  
+//   a {
+//     color: #fff;
+//     font-size: 20px;
+//     transition: color 0.3s ease;
+    
+//     &:hover {
+//       color: #b8de6f;
+//     }
+//   }
+// `;
+
+// const FooterComponent = () => {
+//   return (
+//     <FooterWrapper>
+//       <FooterGrid>
+//         {/* First Column: Logo and Contact Info */}
+//         <Section>
+//           <Logo src={logo} alt="Elexdon Tech Logo" />
+//           <LocationList>
+//             <Location>Nigeria</Location>
+//             <Location>Ghana</Location>
+//             <Location>Kenya</Location>
+//             <Location>Sierra Leone</Location>
+//           </LocationList>
+//           <ContactInfo>
+//             <span>Lagos Address:</span>
+//             <p>Unit 8, Plot 2, Block 47, Babatunde Anjous Avenue, Lekki Phase One, Lagos.</p>
+//           </ContactInfo>
+//           <ContactInfo>
+//             <p>070 ELEXDON (070 428 3272)</p>
+//             <p>info@elexdon.com</p>
+//           </ContactInfo>
+//         </Section>
+        
+//         {/* Second Column: Vatebra Links (Elexdon in this case) */}
+//         <Section>
+//           <SectionTitle>Elexdon</SectionTitle>
+//           <LinksList>
+//             <li><a href="#">About us</a></li>
+//             <li><a href="#">Leadership</a></li>
+//             <li><a href="#">Subsidiaries</a></li>
+//             <li><a href="#">Contact us</a></li>
+//           </LinksList>
+//         </Section>
+
+//         {/* Third Column: Info Links */}
+//         <Section>
+//           <SectionTitle>Info</SectionTitle>
+//           <LinksList>
+//             <li><a href="#">Privacy policy</a></li>
+//             <li><a href="#">ISO policy</a></li>
+//             <li><a href="#">Blog</a></li>
+//             <li><a href="#">Our hubs</a></li>
+//             <li><a href="#">HODs</a></li>
+//           </LinksList>
+//         </Section>
+
+//         {/* Fourth Column: Certifications and Socials */}
+//         <CertificationsSection>
+//           <CertTitle>
+//             ELEXDON IS ISO 20000, 27001 & 22301 CERTIFIED
+//           </CertTitle>
+//           <CertificationBadges>
+//             {/* The image shows three identical certification badges. Using a placeholder here. */}
+//             <CertBadge src={certBadge} alt="ISO Certified Badge" />
+//             <CertBadge src={certBadge} alt="ISO Certified Badge" />
+//             <CertBadge src={certBadge} alt="ISO Certified Badge" />
+//           </CertificationBadges>
+//           <SocialIcons>
+//             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+//             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+//             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
+//             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+//           </SocialIcons>
+//         </CertificationsSection>
+//       </FooterGrid>
+//     </FooterWrapper>
+//   );
+// };
+
+// export default FooterComponent;

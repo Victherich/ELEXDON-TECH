@@ -705,7 +705,7 @@ const Header = () => {
                   }
                 }}
               >
-                Courses <FaChevronDown style={{ marginLeft: '5px', transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }} />
+                Our Subsidiaries <FaChevronDown style={{ marginLeft: '5px', transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }} />
               </NavLink>
               <DropdownContent isOpen={dropdownOpen}>
                 {courses.map((course) => (

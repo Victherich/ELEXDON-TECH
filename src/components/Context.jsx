@@ -46,9 +46,16 @@ const courses = [
   { name: "Graphics Design", path: "/courses/graphics-design" }
 ];
 
+const subsidiaries = [
+  {name:"ELEXDON HOST ", path:'https://elexdonhost.com'},
+  {name:"ELEXDON DIGITAL ACADEMY", path:'https://www.elexdondigitalacademy.com'},
+  {name:"MIKE CONNECT", path:"https://www.mikeconnect.com"},
+  {name:"CO-WORKING SPACE", path:"/coworkingspace"}
+]
+
 
   return (
-    <Context.Provider value={{yes,domainPricings, courses}}>
+    <Context.Provider value={{yes,domainPricings, courses, subsidiaries}}>
       {children}
     </Context.Provider>
   )
