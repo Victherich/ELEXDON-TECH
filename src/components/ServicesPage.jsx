@@ -754,9 +754,10 @@ import {
   FaMobileAlt,
   FaTools,
   FaShareAlt,
-  FaPaintBrush
+  FaPaintBrush, FaUsersCog,FaCogs, FaShoppingCart, FaDraftingCompass
 } from 'react-icons/fa';
 import ContactUsPromo from './ContactUsPromo';
+import ServicePageHero from './ServicePageHero';
 
 // --- Services Data ---
 const servicesData = [
@@ -766,12 +767,43 @@ const servicesData = [
     description: "We help individuals and businesses unleash their full potentials through our modern, responsive, and functional designs that can stand in parity with the best websites in their respective businesses.",
     icon: <FaLaptopCode />
   },
-  {
+
+    {
     id: 2,
     title: "DIGITAL MARKETING",
     description: "With our team of Google Adword Certified Professionals, we help businesses find, attract, and convert their target audience through an effective and time-tested digital marketing methodology.",
     icon: <FaChartLine />
   },
+
+   {
+    id: 13,
+    title: "SOFTWARE APPLICATION DEVELOPMENT",
+    description:
+      "We build scalable, secure, and efficient software applications tailored to meet the unique needs of businesses across industries.",
+    icon: <FaCogs />,
+  }, 
+  {
+    id: 14,
+    title: "IT OUTSOURCING AND CONSULTING",
+    description:
+      "Our IT outsourcing solutions help organizations reduce costs, improve efficiency, and gain access to specialized expertise while focusing on their core business.",
+    icon: <FaUsersCog />,
+  },
+  {
+    id: 15,
+    title: "E-COMMERCE DEVELOPMENT",
+    description:
+      "From online stores to custom e-commerce platforms, we deliver powerful, secure, and user-friendly solutions that drive sales and customer satisfaction.",
+    icon: <FaShoppingCart />,
+  },
+  {
+    id: 16,
+    title: "PRODUCT DESIGN",
+    description:
+      "We create innovative, user-focused product designs that combine functionality with aesthetics to enhance user experiences and business growth.",
+    icon: <FaDraftingCompass />,
+  },
+
   {
     id: 3,
     title: "ENTERPRISE GIS APPLICATION DEVELOPMENT (E-GIS)",
@@ -1022,7 +1054,7 @@ const ServiceItem = ({ service, index }) => (
 const ServicesPage = () => {
   return (
     <>
-      <HeroSection>
+      {/* <HeroSection>
         <HeroContent>
           <Slide direction="down" triggerOnce={false} threshold={0.1}>
             <HeroTitle>Our Services</HeroTitle>
@@ -1036,7 +1068,11 @@ const ServicesPage = () => {
             <HeroButton href="#services-grid">Explore Services</HeroButton>
           </Fade>
         </HeroContent>
-      </HeroSection>
+      </HeroSection> */}
+
+      <ServicePageHero/>
+
+
 
       <ServicesSectionWrapper id="services-grid">
         <Slide direction="down" triggerOnce={false} threshold={0.1}>

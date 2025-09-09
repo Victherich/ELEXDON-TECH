@@ -304,7 +304,7 @@ const ContentContainer = styled.div`
   align-items: center;
   gap: 40px;
 
-  @media (min-width: 768px) {
+  @media (min-width: 885px) {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;

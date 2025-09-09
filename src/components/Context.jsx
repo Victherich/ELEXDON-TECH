@@ -49,7 +49,7 @@ const courses = [
 const subsidiaries = [
   {name:"ELEXDON HOST ", path:'https://elexdonhost.com'},
   {name:"ELEXDON DIGITAL ACADEMY", path:'https://www.elexdondigitalacademy.com'},
-  {name:"MIKE CONNECT", path:"https://www.mikeconnect.com"},
+  {name:"MIKE CONNECT MEDIA", path:"https://www.mikeconnect.com"},
   {name:"CO-WORKING SPACE", path:"/coworkingspace"}
 ]
 
@@ -62,6 +62,30 @@ const subsidiaries = [
 }
 
 export default ContextProvider
+
+
+// db 
+// User “elexdont_db1” was added to the database “elexdont_db1”.
+//pw: myelexdon@5081
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

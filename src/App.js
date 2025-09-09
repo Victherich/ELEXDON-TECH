@@ -62,6 +62,10 @@ import DesktopPublishingPage from './components/Courses/DesktopPublishingPage';
 import GraphicsDesignPage from './components/Courses/GraphicsDesignPage';
 import Header2 from './components/landingPage2/Header2';
 import CoWorkingSpace from './components/CoWorkingSpace';
+import EAcademy from './components/EAcademy';
+import ElexdonProducts from './components/ElexdonProducts';
+import InsightsPage from './components/InsightsPage';
+import CareersPage from './components/CareersPage';
 
 function App() {
   return (
@@ -102,6 +106,13 @@ function App() {
         <Route path='/dashboard' element={<UserDashboard/>}/>
         <Route path='/domainregistercheckout/:domainname/:domain/:tld' element={<DomainRegisterCheckout/>}/>
         <Route path='/domaintransfercheckout/:domainname/:eppcode/:domain/:tld' element={<DomainTransferCheckout/>}/>
+<Route path='/eacademy' element={<EAcademy/>}/>
+<Route path='/products' element={<ElexdonProducts/>}/>
+<Route path='/insights' element={<InsightsPage/>}/>
+<Route path='/careers' element={<CareersPage/>}/>
+
+
+
 
         {/* knowlegdbase articles */}
         <Route path='/cpanelunderstanding' element={<CPanelUnderstandingPage/>}/>

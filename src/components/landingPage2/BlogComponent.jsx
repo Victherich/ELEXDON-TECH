@@ -224,6 +224,7 @@ import p36 from "../../Images2/p36.png";
 import p37 from "../../Images2/p37.png";
 import p38 from "../../Images2/p38.png";
 import { Fade, Slide } from 'react-awesome-reveal';
+import { useNavigate } from 'react-router-dom';
 
 const BlogPageContainer = styled.div`
   color: #333;
@@ -363,7 +364,37 @@ const ReadMoreLink = styled.a`
   }
 `;
 
+const LearnMoreButton = styled.p`
+  padding: 12px 10px;
+  font-size: 1em;
+  font-weight: 600;
+  width:200px;
+  color: #FFFFFF;
+  background-color: #2f5f9bff;;
+  // background-color:#4946ffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+ 
+  margin:0 auto;
+   margin-top:50px;
+  text-align:center;
+  z-index:99999999999999999999999999999999999999999999999999;
+
+  &:hover {
+    background-color: #12c2e9;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
 const BlogComponent = () => {
+  const n = useNavigate();
+
   const cardsData = [
     {
       image: {
@@ -430,6 +461,9 @@ const BlogComponent = () => {
           </Fade>
         ))}
       </CardsGrid>
+      <LearnMoreButton onClick={()=>n('/blogs')}>
+        Explore More
+      </LearnMoreButton>
     </BlogPageContainer>
   );
 };

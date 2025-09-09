@@ -1,85 +1,138 @@
 
-import React, { useEffect, useState } from "react";
-import "../CSS/Partners.css"; // Import the CSS file
+// import React, { useEffect, useState } from "react";
+// import "../CSS/Partners.css"; 
+// import partner1 from "../Images2/l1.jpeg"; 
+// import partner2 from "../Images2/l2.jpeg";
+// import partner3 from "../Images2/l3.jpeg";
 
-// Import partner logos
-import partner1 from "../Images/sp1.jpeg"; // Replace with actual paths
-import partner2 from "../Images/sp2.jpeg";
-import partner3 from "../Images/sp3.jpeg";
-import partner4 from '../Images/sp4.jpeg'
-import partner5 from '../Images/sp5.jpeg'
-import partner6 from "../Images/sp6.jpeg";
 
-import partner8 from '../Images/sp8.jpeg'
+// const Partners2 = () => {
+//   const partners = [
+//     { name: "Elexdon Tech", logo: partner1 },
+//     { name: "Elexdon Host", logo: partner2 },
+//     { name: "Waste Innovations", logo: partner3 },
+  
+//   ];
 
-import { useLocation, useNavigate } from "react-router-dom";
-// import partner4 from "../Images/partner4.png";
-// import partner5 from "../Images/partner5.png";
-// import partner6 from "../Images/partner6.png";
 
+
+
+//   return (
+//     <>
+
+
+//       <div className="partners-section2">
+      
+//       <h2 className="partners-title">They Trust Us</h2>
+//       <div className="partners-slider">
+//         <div className="partners-track2">
+//           {partners.concat(partners).map((partner, index) => (
+//             <div key={index} className="partner-card" style={{background:"white"}}>
+//               <img src={partner.logo} alt={partner.name} className="partner-logo" />
+          
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//     </>
+ 
+//   );
+// };
+
+// export default Partners2;
+
+
+
+import React from "react";
+import styled from "styled-components";
+import Slider from "react-slick";
+
+// You must import the slick carousel CSS files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import partner1 from "../Images2/l4.png";
+import partner2 from "../Images2/l5.png";
+import partner3 from "../Images2/l6.png";
+import partner4 from "../Images2/fac.png";
+import partner5 from "../Images2/hm.png";
+
+// Styled Components
+const PartnersSection = styled.div`
+  overflow: hidden;
+  // padding: 2rem 0;
+  width:50%;
+  margin: 0 auto;
+
+  @media(max-width:768px){
+  width:100%;
+  }
+`;
+
+const PartnersTitle = styled.h2`
+  text-align: center;
+  // margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight:900;
+  // font-family: Arial, sans-serif;
+  color: #2f5f9bff;
+`;
+
+const PartnerImage = styled.img`
+  width: 80px; /* Adjust size as needed */
+  height: auto;
+  margin: 0 auto; /* Center the logos */
+  display: block;
+`;
+
+const P =styled.p`
+
+`
+
+// Main Component
 const Partners2 = () => {
   const partners = [
-    { name: "Elexdon Tech", logo: partner1 },
+    { name: "NISEB", logo: partner1 },
     { name: "Elexdon Host", logo: partner2 },
     { name: "Waste Innovations", logo: partner3 },
-    {name:"Royal Iwere Foundation", logo: partner4},
-    { name: "Sustainable Energy Inc.", logo: partner4 },
-    { name: "Eco-Friendly Materials", logo: partner5 },
-    { name: "Recycling Experts", logo: partner6 },
-      
-    { name: "Eco-Friendly Materials", logo: partner8 },
-  
+     { name: "Elexdon Host", logo: partner4 },
+    { name: "Waste Innovations", logo: partner5 },
   ];
 
-  const [showApply, setShowApply]=useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-
-//   useEffect(()=>{
-//     if(location.pathname==='/'||
-//       location.pathname==='/aboutus'||
-//       location.pathname==='/admission'||
-//     location.pathname==='/academics'||
-//   location.pathname==='/gallery'||
-// location.pathname==='/contactus'){
-//   setShowApply(true)
-// }
-//   },[])
+  const settings = {
+    // Standard carousel options
+    dots: false,
+    arrows: true,
+    
+    // Core settings for the infinite loop
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    
+    // Autoplay settings
+    autoplay: true,
+    autoplaySpeed: 0, // Set to 0 for continuous motion
+    speed: 2000, // A higher value means slower movement
+    
+    // Animation style
+    cssEase: "linear", // Ensures smooth, non-stop animation
+  };
 
   return (
-    <>
-    {/* {(
-  location.pathname === '/' ||
-  location.pathname === '/aboutus' ||
-  location.pathname === '/admissions' ||
-  location.pathname === '/academics' ||
-  location.pathname === '/gallery' ||
-  location.pathname === '/contactus'
-) && (
-  <section className="apply-section" id="apply">
-    <h2>🚀 Ready to Apply?</h2>
-    <p>Take the next step toward a career in environmental sustainability.</p>
-    <a onClick={()=>navigate('/application')} className="apply-btn">Apply Now</a>
-  </section>
-)} */}
-
-      <div className="partners-section2">
-      
-      <h2 className="partners-title">They Trust Us</h2>
-      {/* <h2 className="partners-title2" style={{fontSize:"1.5rem", color:"rgba(0,0,255,0.7)"}}>Our Business & Technology Partners</h2> */}
-      <div className="partners-slider">
-        <div className="partners-track2">
-          {partners.concat(partners).map((partner, index) => (
-            <div key={index} className="partner-card" style={{background:"white"}}>
-              <img src={partner.logo} alt={partner.name} className="partner-logo" />
-              {/* <p className="partner-name">{partner.name}</p> */}
+    <PartnersSection>
+      <PartnersTitle>They Trust Us</PartnersTitle>
+      <div style={{ padding: "0 2rem" }}>
+        <Slider {...settings}>
+          {partners.map((partner, index) => (
+            <div key={index}>
+              <PartnerImage src={partner.logo} alt={partner.name} />
+              {/* <P>{partner.name}</P> */}
             </div>
           ))}
-        </div>
+        </Slider>
       </div>
-    </div>
-    </>
- 
+    </PartnersSection>
   );
 };
 

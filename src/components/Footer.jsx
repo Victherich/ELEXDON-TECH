@@ -508,9 +508,9 @@ const LogoSection = styled(Section)`
 
   p {
     color: whitesmoke; /* Lighter grey for descriptive text */
-    line-height: 1.6;
+    // line-height: 1.6;
     margin-bottom: 10px;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   strong {
@@ -591,7 +591,7 @@ const ContactInfo = styled.div`
   align-items: center;
   margin-bottom: 10px;
   color: whitesmoke;
-  font-size: 0.8rem; /* Make contact info text slightly smaller */
+  font-size: 0.9rem; /* Make contact info text slightly smaller */
 
   svg {
     margin-right: 10px;
@@ -601,8 +601,9 @@ const ContactInfo = styled.div`
   }
 
   a { /* For the email link within ContactInfo */
-    color: #B0B0B0;
+    color: white;
     text-decoration: none;
+    margin-left:5px;
     &:hover {
         color: #00C9FF;
         text-decoration: underline;
@@ -749,7 +750,7 @@ const Footer = () => {
           <p>Elexdon is a world-class integrated web solution provision company with a track record of success in tech services. We develop and offer a flexible range of solutions development and services.</p>
           
           <ContactInfo>
-            <FaEnvelope /> Email: <a href="mailto:info@elexdontech.com"> info@elexdontech.com</a>
+            <FaEnvelope /> Email:  <a href="mailto:info@elexdontech.com"> info@elexdontech.com</a>
           </ContactInfo>
           <ContactInfo>
             <FaPhoneAlt /> Phone (UK): +44(0)7479305003
@@ -758,7 +759,7 @@ const Footer = () => {
             <FaMapMarkerAlt /> Address (UK): The Old Vicarage building, Trinity Road Old Market Avon, Bristol – United Kingdom.
           </ContactInfo>
           <ContactInfo>
-            <FaPhoneAlt /> Phone (NG): +2349015605175
+            <FaPhoneAlt /> Phone (NG): +2349055320154 ,  +2348185609702 (WhatsApp Only)
           </ContactInfo>
           <ContactInfo>
             <FaMapMarkerAlt /> Address (NG): Elexdon Digital Technologies Limited.
@@ -779,8 +780,13 @@ Plot SP 795 First-Gate Mechanic Estate, Apo Fct-Abuja.
           <FooterLink onClick={() => navigate('/')}>Home</FooterLink>
           <FooterLink onClick={() => navigate('/aboutus')}>About Us</FooterLink>
           <FooterLink onClick={() => navigate('/services')}>Services</FooterLink> {/* Assuming a services page */}
+      <FooterLink onClick={() => navigate('/products')}>Products</FooterLink>
+          <FooterLink onClick={() => navigate('/eacademy')}>E-Academy</FooterLink>
+          <FooterLink onClick={() => navigate('/blogs')}>Blogs</FooterLink> {/* Assuming a services page */}
       
-          <FooterLink onClick={() => navigate('/contactus')}>Contact us</FooterLink>
+          <FooterLink onClick={() => navigate('/insights')}>Insights</FooterLink>
+          <FooterLink onClick={() => navigate('/careers')}>Careers</FooterLink>
+          <FooterLink onClick={() => navigate('/contactus')}>Contact Us</FooterLink>
         </Section>
 
         {/* Our Courses Section */}
@@ -793,7 +799,7 @@ Plot SP 795 First-Gate Mechanic Estate, Apo Fct-Abuja.
         <FooterLink onClick={() => window.open('https://elexdonhost.com', '_blank')}>Elexdon Host</FooterLink>
          
           <FooterLink onClick={() => window.open('https://www.elexdondigitalacademy.com', '_blank')}>Elexdon Digital Academy</FooterLink> {/* Assuming an academy page */}
-         <FooterLink onClick={() => window.open('https://mikeconnect.com', '_blank')}>Mike Connect</FooterLink>
+         <FooterLink onClick={() => window.open('https://mikeconnect.com', '_blank')}>Mike Connect Media</FooterLink>
           <FooterLink href='/coworkingspace'>Co-Working Space</FooterLink>
          
         </Section>

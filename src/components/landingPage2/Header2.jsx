@@ -2,7 +2,8 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
-import logo from '../../Images/ELogo.png';
+// import logo from '../../Images/ELogo.png';
+import logo from '../../Images2/logo99.jpeg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Context } from '../Context';
 
@@ -32,7 +33,7 @@ const HeaderWrapper = styled.header`
   width: 100%;
   top: 0;
   z-index: 1000;
-  // background: #6B84A2; /* New background color */
+  // background: #18191aff; /* New background color */
  background:#2f5f9bff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Adjusted shadow for new background */
   border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Slightly stronger border */
@@ -108,13 +109,13 @@ const Nav = styled.nav`
   ul {
     display: flex;
     list-style: none;
-    gap: 35px;
+    gap: 5px;
     margin: 0;
     padding: 0;
 
     @media (max-width: 884px) {
       flex-direction: column;
-      gap: 20px;
+      gap: 10px;
       width: 100%;
       text-align: center;
     }
@@ -394,6 +395,21 @@ const Header2 = () => {
             </li>
             <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
               <NavLink to="/services">SERVICES</NavLink>
+            </li>
+            <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
+              <NavLink to="/products">PRODUCTS</NavLink>
+            </li>
+            <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
+              <NavLink to="/eacademy">E-ACADEMY</NavLink>
+            </li>
+            <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
+              <NavLink to="/blogs">BLOGS</NavLink>
+            </li>
+             <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
+              <NavLink to="/insights">INSIGHTS</NavLink>
+            </li>
+            <li style={{ animationDelay: '0.3s' }} onClick={() => setNavOpen(false)}>
+              <NavLink to="/careers">CAREERS</NavLink>
             </li>
 
             <DropdownContainer
