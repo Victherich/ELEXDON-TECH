@@ -229,7 +229,7 @@ const CardsWrapper = styled.div`
   margin-bottom: 40px;
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    // grid-template-columns: 1fr;
     margin-bottom: 20px;
   }
 `;

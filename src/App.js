@@ -66,6 +66,7 @@ import EAcademy from './components/EAcademy';
 import ElexdonProducts from './components/ElexdonProducts';
 import InsightsPage from './components/InsightsPage';
 import CareersPage from './components/CareersPage';
+import RequestQuotePopup from './components/RequestQuotePopup';
 
 function App() {
   return (
@@ -142,6 +143,7 @@ function App() {
 
 
         </Routes>
+        <RequestQuotePopup/>
         {/* <Hero2/> */}
         {/* <Partners2/> */}
         <Footer/>

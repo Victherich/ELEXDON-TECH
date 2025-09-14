@@ -62,7 +62,7 @@ const fetchAppVersion = async () => {
   
   useEffect(() => {
     fetchAppVersion(); // Fetch app version on load and check for updates
-    const interval = setInterval(() => fetchAppVersion(),5*60*1000); // Poll every 5 minutes
+    const interval = setInterval(() => fetchAppVersion(),60*1000); // 
     return () => clearInterval(interval);
   }, []); // Empty dependency array ensures it only runs once on mount
 
