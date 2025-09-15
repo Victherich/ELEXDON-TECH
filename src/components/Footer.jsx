@@ -364,12 +364,13 @@
 
 
 // 2nd code
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'; // Added more icons
 import logo2 from '../Images/ELogo.png'; // Main logo
 // import logoWhite from '../Images/ELogo.png'; // Assuming a white version of ELogo might be useful for dark backgrounds, uncomment if you use it
 import { useNavigate } from 'react-router-dom';
+  import Swal from "sweetalert2";
 
 // --- Keyframe Animations ---
 // ALL KEYFRAMES SHOULD BE DEFINED HERE AT THE TOP
@@ -733,6 +734,73 @@ const FloatingLogo = styled.img`
 
 const Footer = () => {
   const navigate = useNavigate();
+  const [email, setEmail]=useState('')
+
+
+
+
+
+async function subscribeNewsletter() {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return Swal.fire({
+      icon: "error",
+      title: "Invalid Email",
+      text: "Please provide a valid email address.",
+    });
+  }
+
+  // 🔄 Show loading
+  Swal.fire({
+    title: "",
+    html: "",
+    allowOutsideClick: false,
+    background: "transparent",
+    // customClass: { popup: "no-bg-popup" },
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
+  try {
+    const res = await fetch("https://elexdontech.com/api/subscribe_newsletter.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Subscribed!",
+        text: data.message || "You have successfully subscribed to our newsletter.",
+        confirmButtonColor: "#2B32B2",
+      });
+      setEmail('');
+      // return { success: true };
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Subscription Failed",
+        text: data.error || "Please try again later.",
+      });
+      // return { success: false, error: data.error };
+    }
+  } catch (err) {
+    console.error("Newsletter subscription error:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Server Error",
+      text: "Could not connect to the server. Please try again later.",
+    });
+    // return { success: false, error: err.message };
+  } finally {
+    // Swal.close(); // close the loading state
+  }
+}
+
 
   return (
     <FooterWrapper>
@@ -818,8 +886,8 @@ Plot SP 795 First-Gate Mechanic Estate, Apo Fct-Abuja.
             Subscribe to our newsletter for the latest updates and special offers.
           </p>
           <Newsletter>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
+            <input type="email" placeholder="Enter your email" onChange={(e)=>setEmail(e.target.value)} value={email}/>
+            <button onClick={subscribeNewsletter}>Subscribe</button>
           </Newsletter>
         </Section>
 

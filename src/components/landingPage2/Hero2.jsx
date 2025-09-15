@@ -313,7 +313,7 @@ import React from 'react';
 import styled,{keyframes} from 'styled-components';
 import { Fade, Slide } from 'react-awesome-reveal';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../Images2/logo4.enc';
+import logo from '../../Images2/logo elexdon.jpg';
 
 const zoomAnimation = keyframes`
   0% {

@@ -191,7 +191,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Fade } from 'react-awesome-reveal';
+import { Fade, Zoom } from 'react-awesome-reveal';
 
 // Import team images
 import teamMember1 from "../Images2/t1.jpeg";
@@ -208,7 +208,21 @@ const teamMembersData = [
     name: "MICHAEL E. OKORONKWO",
     position: "CEO / Senior Developer",
     image: teamMember1,
-    isCEO: true,
+    // isCEO: true,
+  },
+
+   {
+    id: 4,
+    name: "AYODELE SEGUN PETER",
+    position: "Mobile App / Back-end Developer",
+    image: teamMember4,
+  },
+
+    {
+    id: 6,
+    name: "VICTOR NDU",
+    position: "Web Developer",
+    image: teamMember6,
   },
 
     {
@@ -225,24 +239,14 @@ const teamMembersData = [
     image: teamMember3,
   },
 
-  {
-    id: 4,
-    name: "AYODELE SEGUN PETER",
-    position: "Mobile App / Back-end Developer",
-    image: teamMember4,
-  },
+ 
   {
     id: 5,
     name: "INNOCENT AGBAEZE",
     position: "Projects Officer / Uk-Representative",
     image: teamMember5,
   },
-  {
-    id: 6,
-    name: "VICTOR NDU",
-    position: "Web Developer",
-    image: teamMember6,
-  },
+
 ];
 
 // --- Styled Components ---
@@ -288,12 +292,12 @@ const CEOCardWrapper = styled.div`
 
 const TeamGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   // grid-template-columns: repeat(5, 1fr);
   gap: 40px;
   justify-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     // grid-template-columns: repeat(2, 1fr);
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 20px;
@@ -308,8 +312,8 @@ const TeamMemberCard = styled.div`
 
 const CircleImageWrapper = styled.div`
   position: relative;
-  width: ${({ isCEO }) => (isCEO ? '280px' : '220px')};
-  height: ${({ isCEO }) => (isCEO ? '280px' : '220px')};
+  width: ${({ isCEO }) => (isCEO ? '280px' : '300px')};
+  height: ${({ isCEO }) => (isCEO ? '280px' : '300px')};
   border-radius: 50%;
   overflow: hidden;
   background: white;
@@ -317,7 +321,7 @@ const CircleImageWrapper = styled.div`
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   cursor: pointer;
 
-  @media(max-width:768px){
+  @media(max-width:767px){
       width: ${({ isCEO }) => (isCEO ? '280px' : '100px')};
   height: ${({ isCEO }) => (isCEO ? '280px' : '100px')};
   }
@@ -358,7 +362,7 @@ const MemberOverlay = styled.div`
 `;
 
 const MemberName = styled.h3`
-  font-size: ${({ isCEO }) => (isCEO ? '1.4rem' : '1.1rem')};
+  font-size: ${({ isCEO }) => (isCEO ? '1.4rem' : '1rem')};
   font-weight: 700;
   margin: 15px 0 5px;
   color: #2C3E50;
@@ -406,7 +410,7 @@ const TeamSection = () => {
       </Fade>
 
       {/* CEO on top */}
-      <CEOCardWrapper>
+      {/* <CEOCardWrapper>
         <Fade direction="up" triggerOnce={false}>
           <TeamMemberCard>
             <CircleImageWrapper isCEO>
@@ -422,16 +426,16 @@ const TeamSection = () => {
             <MemberPosition isCEO>{ceo.position}</MemberPosition>
           </TeamMemberCard>
         </Fade>
-      </CEOCardWrapper>
+      </CEOCardWrapper> */}
 
       {/* Other team members below */}
       <TeamGrid>
         {others.map((member, index) => (
-          <Fade
-  direction="left"
+          <Zoom
+  // direction="left"
   triggerOnce={false}
   delay={index * 100}
-  duration={3000}
+  duration={1000}
   key={member.id}
 >
             <TeamMemberCard>
@@ -444,10 +448,10 @@ const TeamSection = () => {
                   </div>
                 </MemberOverlay>
               </CircleImageWrapper>
-              <MemberName style={{fontSize:"0.7rem"}}>{member.name}</MemberName>
+              <MemberName>{member.name}</MemberName>
               <MemberPosition style={{fontSize:"0.9rem"}}>{member.position}</MemberPosition>
             </TeamMemberCard>
-          </Fade>
+          </Zoom>
         ))}
       </TeamGrid>
     </TeamSectionContainer>
